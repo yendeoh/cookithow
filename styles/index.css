@@ -56,7 +56,7 @@ header {
   transition: all 0.3s ease;
 }
 .home-swiper {
-  height: 100vh;
+  height: 50vh;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
@@ -66,19 +66,91 @@ header {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  background-attachment: fixed; /* This creates a nice parallax effect */
+  background-attachment: fixed; 
   padding-top: 70px;
-  padding-bottom: 60px;
-  position: relative;
 }
+
+  #home {
+    margin-bottom: 0; 
+}
+
+#cuisines {
+    margin-top: 0; 
+    padding: 8rem 10%; 
+    background-image: url(/assets/cook.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    color: white;
+    position: relative;
+    text-align: center; 
+}
+
+.cuisines-text {
+    margin-bottom: 2rem; 
+    font-size: 1.8rem; 
+    line-height: 1.5;
+}
+
+.carousel-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-x: auto;
+    padding: 20px 0;
+    gap: 15px; 
+    max-width: 100%; 
+    margin: 0; 
+    background-color: transparent;
+    border: none;
+}
+
+
+.carousel-track {
+    display: flex;
+    gap: 15px; 
+}
+
+.carousel-container img {
+    border-radius: 10px; 
+    width: 100%; 
+    height: auto; 
+    object-fit: cover; 
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background-color: transparent; /
+    border: none; /* Remove any border */
+}
+
+.carousel-container img:hover {
+    transform: scale(1.05); 
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); 
+}
+
+/* Ensure responsiveness */
+@media (max-width: 800px) {
+    .carousel-container img {
+        width: 200px; 
+        height: 150px;
+    }
+}
+
+@media (max-width: 600px) {
+    .carousel-container img {
+        width: 150px; 
+        height: 120px;
+         position: relative;
+    }
+}
+
 .home-swiper::before {
   content: "";
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.3);
+  height: 50vh;
+  background: transparent;
   pointer-events: none;
   z-index: 1;
 }
@@ -165,7 +237,7 @@ header {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.3); /* Dark overlay */
+  background: transparent; /* Dark overlay */
   pointer-events: none;
   z-index: 1;
 }
@@ -531,7 +603,7 @@ h1 {
   padding: 80px 20px 60px;
   position: relative;
   overflow: hidden;
-  margin-top: 0;
+  margin-top: 70px;
   border-top: 3px solid var(--primary-color);
 }
 
@@ -816,13 +888,7 @@ h1 {
   }
 }
 
-/* Additional Video Background Controls (Optional) */
-/* If you want to pause/play video on hover */
-/*
-#team-section:hover .team-video-background {
-  animation-play-state: paused;
-}
-*/
+
 
 /* If you want different video opacity on mobile */
 @media (max-width: 768px) {
@@ -894,6 +960,7 @@ h1 {
 }
 
 .card svg {
+  object-fit: cover;
   width: 48px;
   fill: #333;
   transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -941,10 +1008,10 @@ h1 {
 }
 
 .carousel-container {
-  width: 100%;
-  overflow: hidden;
-  position: relative;
-  padding: 20px 0;
+    display: flex;
+    justify-content: center;
+    overflow-x: auto;
+    padding: 20px 0;
 }
 
 .carousel-track {
@@ -956,6 +1023,7 @@ h1 {
   flex-shrink: 0;
   margin-right: 20px;
 }
+
 
 @keyframes scroll-left-loop {
   0% {
