@@ -1,0 +1,19 @@
+const sql = require("mssql");
+
+const config = {
+    user: "your_db_user",
+    password: "your_db_password",
+    server: "localhost", // Or your actual server address
+    database: "LoginForCookITHow",
+    options: {
+        encrypt: true, // For Azure
+        trustServerCertificate: true // Change to true if you use self-signed certs
+    }
+};
+
+const pool = new sql.ConnectionPool(config);
+const db = pool.connect()
+    .then(() => console.log("Connected to MS SQL database"))
+    .catch(err => console.error("Database connection failed:", err));
+
+module.exports = { sql, db };

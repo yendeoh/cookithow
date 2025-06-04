@@ -39,6 +39,75 @@ document.getElementById("show-signin-form").addEventListener("click", function()
     });
 });
 
+document.getElementById("login-btn").addEventListener("click", async (e) => {
+    e.preventDefault();
+
+    const email = document.getElementById("email-input").value;
+    const password = document.getElementById("password-input").value;
+
+    if (!email.includes("@")) {
+        alert("Please enter a valid email address.");
+        return;
+    }
+
+    try {
+        const response = await fetch("http://localhost:5000/api/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            alert("Login successful!");
+            window.location.href = "user.html";
+        } else {
+            alert("Invalid email or password.");
+        }
+
+    } catch (error) {
+        console.error("Login error:", error);
+        alert("Server error, please try again later.");
+    }
+});
+
+document.getElementById("signup-btn").addEventListener("click", async (e) => {
+    e.preventDefault();
+
+    const username = document.getElementById("username").value;
+    const fullName = document.getElementById("fullName").value;
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("signup-password-input").value;
+    const confirmPassword = document.getElementById("confirmPassword").value;
+
+    if (password !== confirmPassword) {
+        alert("Passwords don't match!");
+        return;
+    }
+
+    try {
+        const response = await fetch("http://localhost:5000/api/signup", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username, fullName, email, password })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            alert("Registration successful! Redirecting...");
+            window.location.href = "user.html";
+        } else {
+            alert("Signup failed: " + data.message);
+        }
+
+    } catch (error) {
+        console.error("Signup error:", error);
+        alert("Server error, please try again later.");
+    }
+});
+
 // Password visibility toggle functionality
 function setupPasswordToggle(inputId, toggleId) {
     const passwordInput = document.getElementById(inputId);
@@ -144,78 +213,99 @@ if (passwordInput) {
 }
 
 // Characters celebrate on button clicks - LOGIN BUTTON WITH REDIRECT
-if (loginBtn) {
-    loginBtn.addEventListener("click", (e) => {
-        e.preventDefault();
-        
-        const email = emailInput.value;
-        const password = passwordInput.value;
+document.addEventListener("DOMContentLoaded", () => {
+    const loginBtn = document.getElementById("login-btn");
+    const signupBtn = document.getElementById("signup-btn");
 
-        // Validate email
-        if (!email.includes("@")) {
-            alert("Please enter a valid email address.");
-            return;
-        }
+    if (loginBtn) {
+        loginBtn.addEventListener("click", async (e) => {
+            e.preventDefault();
 
-        // Retrieve users from local storage
-        const users = JSON.parse(localStorage.getItem('users')) || [];
-        const user = users.find(user => user.email === email);
+            const emailElement = document.getElementById("email-input");
+            const passwordElement = document.getElementById("password-input");
 
-        // Check if user exists and password matches
-        if (!user) {
-            alert("User not found. Please check your email.");
-            return;
-        }
+            if (!emailElement || !passwordElement) {
+                console.error("Login elements missing!");
+                return;
+            }
 
-        if (user.password !== password) {
-            alert("Incorrect password. Please try again.");
-            return;
-        }
+            const email = emailElement.value;
+            const password = passwordElement.value;
 
-        // Successful login - ADD REDIRECT HERE
-        alert("Login successful!");
-        // Replace 'dashboard.html' with your desired destination page
-        window.location.href = 'user.html';
-    });
-}
+            if (!email.includes("@")) {
+                alert("Please enter a valid email address.");
+                return;
+            }
 
-// Sign-up functionality - SIGNUP BUTTON WITH REDIRECT
-if (signupBtn) {
-    signupBtn.addEventListener('click', function(e) {
-        e.preventDefault();
+            try {
+                const response = await fetch("http://localhost:5000/api/login", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ email, password })
+                });
 
-        const password = document.getElementById('signup-password-input').value;
-        const confirmPassword = document.getElementById('confirmPassword').value;
-        
-        if (password !== confirmPassword) {
-            alert("Passwords don't match!");
-            return;
-        }
+                const data = await response.json();
 
-        const username = document.getElementById('username').value;
-        const email = document.getElementById('email').value;
-        const fullName = document.getElementById('fullName').value;
-        const users = JSON.parse(localStorage.getItem('users')) || [];
+                if (data.success) {
+                    alert("Login successful!");
+                    window.location.href = "user.html";
+                } else {
+                    alert("Invalid email or password.");
+                }
 
-        if (users.some(user => user.username === username)) {
-            alert('Username already exists. Please choose another one.');
-            return;
-        }
-
-        users.push({
-            username,
-            password,
-            email,
-            fullName
+            } catch (error) {
+                console.error("Login error:", error);
+                alert("Server error, please try again later.");
+            }
         });
+    }
 
-        localStorage.setItem('users', JSON.stringify(users));
-        
-        alert("Registration successful! You will be redirected to the welcome page.");
-        // Replace 'welcome.html' with your desired destination page
-        window.location.href = 'user.html';
-    });
-}
+    if (signupBtn) {
+        signupBtn.addEventListener("click", async (e) => {
+            e.preventDefault();
+
+            const username = document.getElementById("username");
+            const fullName = document.getElementById("fullName");
+            const email = document.getElementById("email");
+            const password = document.getElementById("signup-password-input");
+            const confirmPassword = document.getElementById("confirmPassword");
+
+            if (!username || !fullName || !email || !password || !confirmPassword) {
+                console.error("Signup elements missing!");
+                return;
+            }
+
+            if (password.value !== confirmPassword.value) {
+                alert("Passwords don't match!");
+                return;
+            }
+
+            console.log("Sending signup request:", { username: username.value, fullName: fullName.value, email: email.value, password: password.value });
+
+            try {
+                const response = await fetch("http://localhost:5000/api/signup", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ username: username.value, fullName: fullName.value, email: email.value, password: password.value })
+                });
+
+                const data = await response.json();
+                console.log("Response from server:", data);
+
+                if (data.success) {
+                    alert("Registration successful! Redirecting...");
+                    window.location.href = "user.html";
+                } else {
+                    alert("Signup failed: " + data.message);
+                }
+
+            } catch (error) {
+                console.error("Signup error:", error);
+                alert("Server error, please try again later.");
+            }
+        });
+    }
+});
 
 window.addEventListener('DOMContentLoaded', () => {
     // Place characters just above the visible bottom of the viewport
