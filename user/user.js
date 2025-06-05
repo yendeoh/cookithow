@@ -400,7 +400,7 @@ function displayRecipeDetails(recipe) {
     ? `<div class="source-wrapper"><a href="${recipe.strSource}" target="_blank">View Original Source</a></div>`
     : "";
 
-  // --- Insert the checkbox for marking as finished ---
+  // --- Insert the Save button and checkbox for marking as finished ---
   modalContent.innerHTML = `
     <h2>${recipe.strMeal}</h2>
     <img src="${recipe.strMealThumb}" alt="${recipe.strMeal}">
@@ -411,12 +411,28 @@ function displayRecipeDetails(recipe) {
     ${youtubeHTML}
     ${sourceHTML}
     <div style="margin-top:1.5rem;">
+      <button id="save-recipe-btn" class="save-recipe-btn">Save</button>
       <input type="checkbox" id="dish-finished-checkbox">
       <label for="dish-finished-checkbox">Mark this dish as finished</label>
     </div>
   `;
 
-  // Add event listener for the checkbox
+  // Save button logic
+  const saveBtn = document.getElementById("save-recipe-btn");
+  if (saveBtn) {
+    saveBtn.addEventListener("click", function () {
+      let saved = JSON.parse(localStorage.getItem('savedRecipes') || '[]');
+      if (!saved.some(r => r.idMeal === recipe.idMeal)) {
+        saved.push(recipe);
+        localStorage.setItem('savedRecipes', JSON.stringify(saved));
+        alert('Recipe saved!');
+      } else {
+        alert('Recipe already saved!');
+      }
+    });
+  }
+
+  // Finished checkbox logic
   const finishedCheckbox = document.getElementById("dish-finished-checkbox");
   if (finishedCheckbox) {
     finishedCheckbox.addEventListener("change", function (e) {
@@ -429,8 +445,19 @@ function displayRecipeDetails(recipe) {
 
 // Add this function anywhere in your JS file (outside displayRecipeDetails)
 function saveDishCompletionToDatabase(recipe) {
-  // Replace this with your actual database logic (AJAX/fetch)
-  alert(`Marked "${recipe.strMeal}" as finished! (Send to database here)`);
+  fetch('/api/finished', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(recipe)
+  })
+  .then(res => res.json())
+  .then(data => {
+    alert('Marked as finished and saved to database!');
+  })
+  .catch(err => {
+    alert('Failed to save to database.');
+    console.error(err);
+  });
 }
 
 function scrollToRecipeFinder() {
@@ -778,7 +805,39 @@ if (document.readyState === "loading") {
 function reinitializeProfileAutoType() {
   initProfileAutoType();
 }
-
+function openSavedPopup() {
+    const saved = JSON.parse(localStorage.getItem('savedRecipes') || '[]');
+    const list = document.getElementById('saved-list');
+    if (saved.length) {
+        list.innerHTML = saved.map(r => `
+            <div class="saved-dish-card" data-id="${r.idMeal}">
+                <img src="${r.strMealThumb}" alt="${r.strMeal}">
+                <div class="saved-dish-title">${r.strMeal}</div>
+            </div>
+        `).join('');
+        // Make each card clickable to show the recipe popup again
+        list.querySelectorAll('.saved-dish-card').forEach(card => {
+            card.onclick = () => getRecipeDetails(card.getAttribute('data-id'));
+        });
+    } else {
+        list.innerHTML = '<p style="color:#fff;text-align:center;">No saved recipes.</p>';
+    }
+    document.getElementById('saved-popup').classList.remove('hidden');
+}
+function closeSavedPopup() {
+    document.getElementById('saved-popup').classList.add('hidden');
+}
+function openFinishedPopup() {
+    const finished = JSON.parse(localStorage.getItem('finishedRecipes') || '[]');
+    const list = document.getElementById('finished-list');
+    list.innerHTML = finished.length
+        ? finished.map(r => `<div><strong>${r.strMeal}</strong></div>`).join('')
+        : '<p>No finished recipes.</p>';
+    document.getElementById('finished-popup').classList.remove('hidden');
+}
+function closeFinishedPopup() {
+    document.getElementById('finished-popup').classList.add('hidden');
+}
 function setupCarousel(carouselId) {
   const carouselContainer = document.getElementById(carouselId);
   if (!carouselContainer) {
@@ -853,4 +912,6 @@ document.addEventListener("DOMContentLoaded", function () {
       imageElement.style.opacity = 1;
     }, 1);
   }, 7000);
+
+  
 });

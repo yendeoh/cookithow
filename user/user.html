@@ -20,43 +20,32 @@
 
 <body>
     <header>
-        <!-- Logo -->
-        <a href="#" class="logo">CookITHow</a>
-
-        <!-- Menu Icon -->
-        <div class="bx bx-menu" id="menu-icon"></div>
-
-        <!-- Nav Bar -->
-        <ul class="navbar">
-            <li>
-                <a href="#home" class="home"
-                    onclick="event.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' });">Home</a>
-            </li>
-            <li>
-                <a href="#recipe-finder" class="cuisines"
-                    onclick="event.preventDefault(); document.querySelector('#recipe-finder').scrollIntoView({ behavior: 'smooth' });">Cuisines</a>
-            </li>
-            <li>
-                <a href="#team-section" class="ourteam"
-                    onclick="event.preventDefault(); document.querySelector('#team-section').scrollIntoView({ behavior: 'smooth' });">Devs</a>
-            </li>
-        </ul>
-        <label class="event-wrapper">
-            <input type="checkbox" checked="" class="event-wrapper-inp" />
-            <div class="bar">
-                <span class="top bar-list"></span>
-                <span class="middle bar-list"></span>
-                <span class="bottom bar-list"></span>
-            </div>
-            <section class="menu-container">
-                <div class="menu-list">Finished</div>
-                <div class="menu-list">Saved</div>
-                <a href="#signup" style="color: rgb(255, 0, 0);" class="menu-list"
-                    onclick="window.open('../html/login.html'); return false;">Log out</a>
-            </section>
-        </label>
-
-    </header>
+    <!-- Logo -->
+    <a href="#" class="logo">CookITHow</a>
+    <!-- Nav Bar -->
+    <ul class="navbar">
+    <li>
+        <a href="#home" class="home"
+            onclick="event.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' });">Home</a>
+    </li>
+    <li>
+        <a href="#recipe-finder" class="cuisines"
+            onclick="event.preventDefault(); document.querySelector('#recipe-finder').scrollIntoView({ behavior: 'smooth' });">Cuisines</a>
+    </li>
+    <li>
+        <a href="#team-section" class="ourteam"
+            onclick="event.preventDefault(); document.querySelector('#team-section').scrollIntoView({ behavior: 'smooth' });">Devs</a>
+    </li>
+    <li class="dropdown">
+        <a href="javascript:void(0);" class="dropbtn">Menu &#x25BC;</a>
+        <div class="dropdown-content">
+            <a href="javascript:void(0);" onclick="openFinishedPopup()">Finished</a>
+            <a href="javascript:void(0);" onclick="openSavedPopup()">Saved</a>
+            <a href="#signup" style="color: rgb(255, 0, 0);" onclick="window.open('../html/login.html'); return false;">Log out</a>
+        </div>
+    </li>
+</ul>
+</header>
     <section class="home-swiper" id="home">
         <div class="home-text">
             <span>WE ARE COOKITHOW</span>
@@ -304,7 +293,6 @@
                         </div>
                     </section>
             </li>
-            </li>
             <li class="team-card" data-profile="sarah">
                 <div class="team-photo-glow">
                     <img src="../assets/rhodney.jpg" alt="Team Member 3" class="team-photo-large" />
@@ -384,9 +372,23 @@
                         </div>
                     </section>
             </li>
-            </li>
         </ul>
-    </section>
+    </section> 
+    <div id="finished-popup" class="modal-container hidden">
+        <div class="modal-content">
+            <button onclick="closeFinishedPopup()" class="modal-close-btn">+</button>
+            <h2>Finished Recipes</h2>
+            <div id="finished-list"></div>
+        </div>
+    </div>
+    <div id="saved-popup" class="modal-container hidden">
+    <div class="modal-content">
+        <button onclick="closeSavedPopup()" class="modal-close-btn">+</button>
+        <h2>Saved Recipes</h2>
+        <div id="saved-list" class="saved-list-grid"></div>
+    </div>
+</div>
+    </div>
     <script src="../user/user.js"></script>
 </body>
 

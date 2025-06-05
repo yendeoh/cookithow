@@ -118,8 +118,8 @@ header {
     height: auto; 
     object-fit: cover; 
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    background-color: transparent; /
-    border: none; /* Remove any border */
+    background-color: transparent; 
+    border: none;
 }
 
 .carousel-container img:hover {
