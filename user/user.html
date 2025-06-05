@@ -41,11 +41,21 @@
                     onclick="event.preventDefault(); document.querySelector('#team-section').scrollIntoView({ behavior: 'smooth' });">Devs</a>
             </li>
         </ul>
-        <ul class="navbar">
-            <li>
-                <a href="#signup" class="Signup" onclick="window.open('login.html'); return false;">Log In</a>
-            </li>
-        </ul>
+        <label class="event-wrapper">
+            <input type="checkbox" checked="" class="event-wrapper-inp" />
+            <div class="bar">
+                <span class="top bar-list"></span>
+                <span class="middle bar-list"></span>
+                <span class="bottom bar-list"></span>
+            </div>
+            <section class="menu-container">
+                <div class="menu-list">Profile</div>
+                <div class="menu-list">Saved</div>
+                <a href="#signup" style="color: rgb(255, 0, 0);" class="menu-list"
+                    onclick="window.open('../html/login.html'); return false;">Log out</a>
+            </section>
+        </label>
+
     </header>
     <section class="home-swiper" id="home">
         <div class="home-text">
