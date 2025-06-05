@@ -1121,7 +1121,6 @@ h1 {
 }
 
 .card svg {
-  object-fit: cover;
   width: 48px;
   fill: #333;
   transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -1169,9 +1168,9 @@ h1 {
 }
 
 .carousel-container {
-  display: flex;
-  justify-content: center;
-  overflow-x: auto;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
   padding: 20px 0;
 }
 

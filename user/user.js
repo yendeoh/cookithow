@@ -794,14 +794,11 @@ function setupCarousel(carouselId) {
     return;
   }
 
-  // --- 1. Clone Cards for Seamless Loop ---
-  // Clone each original card and append it to the track.
   originalCards.forEach((card) => {
     const clone = card.cloneNode(true);
     carouselTrack.appendChild(clone);
   });
 
-  // --- 2. Calculate Dynamic Widths and Speed ---
   let totalOriginalWidth = 0;
   originalCards.forEach((card) => {
     const cardStyle = getComputedStyle(card);
@@ -809,19 +806,16 @@ function setupCarousel(carouselId) {
     totalOriginalWidth += card.offsetWidth + marginRight;
   });
 
-  // Set the carousel track's width to accommodate all cards (original + cloned)
-  carouselTrack.style.width = `${totalOriginalWidth * 2}px`; // Assuming we cloned once
+  carouselTrack.style.width = `${totalOriginalWidth * 2}px`;
 
-  const pixelsPerSecond = 50; // Adjust this value to control the speed
-  const animationDuration = totalOriginalWidth / pixelsPerSecond; // Time in seconds
+  const pixelsPerSecond = 25;
+  const animationDuration = totalOriginalWidth / pixelsPerSecond;
 
-  // Apply the calculated duration as a CSS variable for this specific carousel
   carouselTrack.style.setProperty(
     `--carousel-speed-${carouselId.slice(-1)}`,
     `${animationDuration}s`
   );
 
-  // --- Optional: Pause on Hover ---
   carouselTrack.addEventListener("mouseenter", () => {
     carouselTrack.style.animationPlayState = "paused";
   });
@@ -831,10 +825,8 @@ function setupCarousel(carouselId) {
   });
 }
 
-// Initialize the first carousel (moves right to left by default CSS)
 setupCarousel("carousel1");
 
-// Initialize the second carousel (moves left to right)
 setupCarousel("carousel2");
 
 document.addEventListener("DOMContentLoaded", function () {
