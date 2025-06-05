@@ -1,73 +1,189 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CookITHow - Recipe Finder</title>
-    <link rel="stylesheet" href="/user/user.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Recipe Finder</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../user/user.css" />
+    <style>
+        .cuisines {
+            margin-top: 0 !important;
+            padding-top: 0 !important;
+        }
+    </style>
 </head>
+
 <body>
-    <!-- Navigation Header -->
-    <header class="navbar-container">
-        <a href="#" class="logo">
-            <i class="bx">🍳</i>
-            CookITHow
-        </a>
+    <header>
+        <!-- Logo -->
+        <a href="#" class="logo">CookITHow</a>
 
-        <!-- Main Navigation -->
-        <ul class="navbar">
-            <li><a href="#" class="home-active">Home</a></li>
-            <li><a href="#">Cuisines</a></li>
-            <li><a href="#">Devs</a></li>
-        </ul>
+        <!-- Menu Icon -->
+        <div class="bx bx-menu" id="menu-icon"></div>
 
-        <!-- Auth Section -->
+        <!-- Nav Bar -->
         <ul class="navbar">
             <li>
-                <!-- Login Button (shown when not authenticated) -->
-                <a href="#" class="Signup" id="loginBtn">Log In</a>
-                
-                <!-- Profile Section (hidden initially) -->
-                <div class="profile-container" id="profileContainer" style="display: none;">
-                    <button class="profile-button Signup" id="profileButton">
-                        <img 
-                            src="/api/placeholder/40/40" 
-                            alt="User Avatar"
-                            class="profile-avatar"
-                            id="profileAvatar"
-                        />
-                    </button>
-                    
-                    <div class="profile-dropdown" id="profileDropdown">
-                        <div class="profile-info">
-                            <div class="profile-name" id="dropdownName">John Doe</div>
-                            <div class="profile-email" id="dropdownEmail">john@example.com</div>
-                        </div>
-                        <a href="#" class="dropdown-item">Profile Settings</a>
-                        <a href="#" class="dropdown-item">My Recipes</a>
-                        <a href="#" class="dropdown-item">Favorites</a>
-                        <button class="dropdown-item" id="logoutBtn">Logout</button>
-                    </div>
-                </div>
+                <a href="#home" class="home"
+                    onclick="event.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' });">Home</a>
+            </li>
+            <li>
+                <a href="#recipe-finder" class="cuisines"
+                    onclick="event.preventDefault(); document.querySelector('#recipe-finder').scrollIntoView({ behavior: 'smooth' });">Cuisines</a>
+            </li>
+            <li>
+                <a href="#team-section" class="ourteam"
+                    onclick="event.preventDefault(); document.querySelector('#team-section').scrollIntoView({ behavior: 'smooth' });">Devs</a>
             </li>
         </ul>
-
-        <div class="menu-icon" id="menuIcon">☰</div>
+        <ul class="navbar">
+            <li>
+                <a href="#signup" class="Signup" onclick="window.open('login.html'); return false;">Log In</a>
+            </li>
+        </ul>
     </header>
+    <section class="home-swiper" id="home">
+        <div class="home-text">
+            <span>WE ARE COOKITHOW</span>
+            <h1>Choose CookITHow <br> the best website <br> to learn cooking</h1>
+        </div>
+        <img id="rotatingImage" class="circle-img" src="../assets/food2.png" alt="Rotating Image">
+    </section>
+
+    <!-- Cuisines section stays right after landing page -->
+    <section class="cuisines" id="cuisines">
+        <div class="cuisines-text">
+            <h1>Explore Cuisines</h1>
+            <p>Discover a wide variety of cuisines from different cultures! From Asia to Europe, CookITHow helps you
+                master it all.</p>
+        </div>
+        <div class="carousel-container" id="carousel1">
+            <div class="carousel-track">
+                <div class="card">
+                    <img src="../assets/jollof.jpg" alt="Description">
+                    <div class="card__content">
+                        <p class="card__title">Jollof Rice / West Africa</p>
+                        <p class="card__description">A vibrant, spiced rice dish cooked in a flavorful tomato-based
+                            sauce,
+                            often served with chicken or fish.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="../assets/tagine.jpg" alt="Description">
+                    <div class="card__content">
+                        <p class="card__title">Tagine / Morocco</p>
+                        <p class="card__description">A slow-cooked, aromatic stew featuring meats, vegetables, and
+                            spices, traditionally
+                            prepared and served in an earthenware pot.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="../assets/bobotie.jpg" alt="Description">
+                    <div class="card__content">
+                        <p class="card__title">Bobotie South Africa</p>
+                        <p class="card__description">A savory baked dish with spiced minced meat topped with an
+                            egg-based custard, offering a delightful blend of sweet and savory flavors.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="../assets/injera.jpg" alt="Description">
+                    <div class="card__content">
+                        <p class="card__title">Injera with Doro Wat / Ethiopia</p>
+                        <p class="card__description">Injera is a spongy, sourdough flatbread used to scoop up Doro
+                            Wat, a rich and spicy chicken stew simmered with berbere spice and clarified butter.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="../assets/suya.jpg" alt="Description">
+                    <div class="card__content">
+                        <p class="card__title">Suya / Nigeria</p>
+                        <p class="card__description">Skewered and grilled meat, often beef or chicken, heavily
+                            spiced with a dry peanut-based rub, delivering a smoky and nutty flavor.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="../assets/chili.jpg" alt="Description">
+                    <div class="card__content">
+                        <p class="card__title">Chili con Carne</p>
+                        <p class="card__description">A hearty stew made with chili peppers, meat (usually beef),
+                            tomatoes, and often beans, offering a warm and spicy flavor.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-container" id="carousel2">
+            <div class="carousel-track">
+                <div class="card">
+                    <img src="../assets/asado.jpg" alt="Description">
+                    <div class="card__content">
+                        <p class="card__title">Asado / Argentina</p>
+                        <p class="card__description">AA traditional South American barbecue, featuring various cuts
+                            of meat (especially beef) slow-cooked over an open flame or embers, renowned for its
+                            smoky flavor.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="../assets/ramen.jpg" alt="Description">
+                    <div class="card__content">
+                        <p class="card__title">Ramen / Japan</p>
+                        <p class="card__description">A Japanese noodle soup dish, with a rich broth, wheat noodles,
+                            and various toppings such as sliced pork, nori, and green onions.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="../assets/lumpia.jpg" alt="Description">
+                    <div class="card__content">
+                        <p class="card__title">Lumpia / Philippines</p>
+                        <p class="card__description">Filipino spring rolls, commonly filled with ground meat and
+                            vegetables, then deep-fried until crispy, served with dipping sauce.
+                        </p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="../assets/fishchip.jpg" alt="Description">
+                    <div class="card__content">
+                        <p class="card__title">Fish and Chips / United Kingdom:</p>
+                        <p class="card__description">A popular takeaway dish of battered and deep-fried fish
+                            (usually cod or haddock) served with thick-cut fried potatoes.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="../assets/pael.jpg" alt="Description">
+                    <div class="card__content">
+                        <p class="card__title">Paella Spain</p>
+                        <p class="card__description">A vibrant Spanish rice dish originally from Valencia, typically
+                            made with rice, saffron, vegetables, and seafood or meat.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="../assets/biryani.jpg" alt="Description">
+                    <div class="card__content">
+                        <p class="card__title">Biryani / India</p>
+                        <p class="card__description">A flavorful mixed rice dish made with spices, rice, and meat or
+                            vegetables, known for its aromatic layers and rich taste.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Recipe Finder section below cuisines -->
     <div class="recipe-finder-container" id="recipe-finder">
         <h1>Recipe Finder</h1>
-
         <form id="search-form" class="search-box">
             <input type="text" id="search-input" placeholder="Search by name (ex. 'carrot')" />
             <button type="submit" id="search-button">Search</button>
         </form>
-
         <div class="random-button-container">
             <button id="random-button" class="random-button">
                 Get Random Recipe
             </button>
         </div>
-
         <div class="filter-controls">
             <select id="category-select">
                 <option value="">Filter by Category</option>
@@ -79,9 +195,7 @@
         <div class="message" id="message-area">
             Search for a recipe or get a random one!
         </div>
-
         <div class="results-grid" id="results-grid"></div>
-
         <div class="modal-container hidden" id="recipe-modal">
             <div class="modal-content">
                 <button id="modal-close-btn" class="modal-close-btn">+</button>
@@ -90,196 +204,180 @@
         </div>
     </div>
 
-    <!-- Separated Team Section - Now with Video Background -->
+    <!-- Team Section -->
     <section id="team-section" class="team-section">
         <!-- Video Background -->
         <video class="team-video-background" autoplay muted loop playsinline>
-            <source src="/assets/vidbg.mp4" type="video/mp4">
-            <!-- Add additional video formats for better browser support -->
-            <source src="/assets/vidbg.webm" type="video/webm">
-            <!-- Fallback message for browsers that don't support video -->
+            <source src="../assets/vidbg.mp4" type="video/mp4">
+            <source src="../assets/vidbg.webm" type="video/webm">
             Your browser does not support the video tag.
         </video>
-        
-        <!-- Video Overlay for Better Text Readability -->
         <div class="team-video-overlay"></div>
-        
         <h2 class="our-team-title">Our Team</h2>
         <ul class="team-grid-container">
             <li class="team-card" data-profile="regod">
                 <div class="team-photo-glow">
-                    <img src="/assets/pogi.jpg" alt="Regod" class="team-photo-large" />
+                    <img src="../assets/pogi.jpg" alt="Regod" class="team-photo-large" />
                 </div>
                 <div class="team-info">
                     <div class="team-name">Ivan</div>
                     <div class="team-role">Back-end Developer</div>
-                   <section class="skills-section">
-                    <div class="skills-grid-container">
-                        <div class="skill-card">
-                            <div class="skill-icon">
-                                <img src="/assets/icons/html.png" alt="HTML" class="skill-icon-img" />
+                    <section class="skills-section">
+                        <div class="skills-grid-container">
+                            <div class="skill-card">
+                                <div class="skill-icon">
+                                    <img src="../assets/icons/html.png" alt="HTML" class="skill-icon-img" />
+                                </div>
+                                <div class="skill-info">
+                                    <div class="skill-name">HTML</div>
+                                    <div class="skill-level">Advanced</div>
+                                </div>
                             </div>
-                            <div class="skill-info">
-                                <div class="skill-name">HTML</div>
-                                <div class="skill-level">Advanced</div>
+                            <div class="skill-card">
+                                <div class="skill-icon">
+                                    <img src="../assets/icons/css-3.png" alt="CSS" class="skill-icon-img" />
+                                </div>
+                                <div class="skill-info">
+                                    <div class="skill-name">CSS</div>
+                                    <div class="skill-level">Advanced</div>
+                                </div>
+                            </div>
+                            <div class="skill-card">
+                                <div class="skill-icon">
+                                    <img src="../assets/icons/js.png" alt="JavaScript" class="skill-icon-img" />
+                                </div>
+                                <div class="skill-info">
+                                    <div class="skill-name">JavaScript</div>
+                                    <div class="skill-level">Intermediate</div>
+                                </div>
                             </div>
                         </div>
-                        <div class="skill-card">
-                            <div class="skill-icon">
-                                <img src="/assets/icons/css-3.png" alt="CSS" class="skill-icon-img" />
-                            </div>
-                            <div class="skill-info">
-                                <div class="skill-name">CSS</div>
-                                <div class="skill-level">Advanced</div>
-                            </div>
-                        </div>
-                        <div class="skill-card">
-                            <div class="skill-icon">
-                                <img src="/assets/icons/js.png" alt="JavaScript" class="skill-icon-img" />
-                            </div>
-                            <div class="skill-info">
-                                <div class="skill-name">JavaScript</div>
-                                <div class="skill-level">Intermediate</div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+                    </section>
             </li>
             <li class="team-card" data-profile="alex">
                 <div class="team-photo-glow">
-                    <img src="/assets/jep.jpeg" alt="Team Member 2" class="team-photo-large" />
+                    <img src="../assets/jep.jpeg" alt="Team Member 2" class="team-photo-large" />
                 </div>
                 <div class="team-info">
                     <div class="team-name">Jep</div>
                     <div class="team-role">Frontend Developer</div>
                     <div class="team-role">UI/UX Designer</div>
-                   <section class="skills-section">
-                    <div class="skills-grid-container">
-                        <div class="skill-card">
-                            <div class="skill-icon">
-                                <img src="/assets/icons/html.png" alt="HTML" class="skill-icon-img" />
+                    <section class="skills-section">
+                        <div class="skills-grid-container">
+                            <div class="skill-card">
+                                <div class="skill-icon">
+                                    <img src="../assets/icons/html.png" alt="HTML" class="skill-icon-img" />
+                                </div>
+                                <div class="skill-info">
+                                    <div class="skill-name">HTML</div>
+                                    <div class="skill-level">Advanced</div>
+                                </div>
                             </div>
-                            <div class="skill-info">
-                                <div class="skill-name">HTML</div>
-                                <div class="skill-level">Advanced</div>
+                            <div class="skill-card">
+                                <div class="skill-icon">
+                                    <img src="../assets/icons/css-3.png" alt="CSS" class="skill-icon-img" />
+                                </div>
+                                <div class="skill-info">
+                                    <div class="skill-name">CSS</div>
+                                    <div class="skill-level">Advanced</div>
+                                </div>
+                            </div>
+                            <div class="skill-card">
+                                <div class="skill-icon">
+                                    <img src="../assets/icons/js.png" alt="JavaScript" class="skill-icon-img" />
+                                </div>
+                                <div class="skill-info">
+                                    <div class="skill-name">JavaScript</div>
+                                    <div class="skill-level">Intermediate</div>
+                                </div>
                             </div>
                         </div>
-                        <div class="skill-card">
-                            <div class="skill-icon">
-                                <img src="/assets/icons/css-3.png" alt="CSS" class="skill-icon-img" />
-                            </div>
-                            <div class="skill-info">
-                                <div class="skill-name">CSS</div>
-                                <div class="skill-level">Advanced</div>
-                            </div>
-                        </div>
-                        <div class="skill-card">
-                            <div class="skill-icon">
-                                <img src="/assets/icons/js.png" alt="JavaScript" class="skill-icon-img" />
-                            </div>
-                            <div class="skill-info">
-                                <div class="skill-name">JavaScript</div>
-                                <div class="skill-level">Intermediate</div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+                    </section>
             </li>
             </li>
-            
             <li class="team-card" data-profile="sarah">
                 <div class="team-photo-glow">
-                    <img src="/assets/rhodney.jpg" alt="Team Member 3" class="team-photo-large" />
+                    <img src="../assets/rhodney.jpg" alt="Team Member 3" class="team-photo-large" />
                 </div>
                 <div class="team-info">
                     <div class="team-name">Rhodney</div>
                     <div class="team-role">Frontend Developer</div>
                     <div class="team-role">UI/UX Designer</div>
                     <section class="skills-section">
-                    <div class="skills-grid-container">
-                        <div class="skill-card">
-                            <div class="skill-icon">
-                                <img src="/assets/icons/html.png" alt="HTML" class="skill-icon-img" />
+                        <div class="skills-grid-container">
+                            <div class="skill-card">
+                                <div class="skill-icon">
+                                    <img src="../assets/icons/html.png" alt="HTML" class="skill-icon-img" />
+                                </div>
+                                <div class="skill-info">
+                                    <div class="skill-name">HTML</div>
+                                    <div class="skill-level">Advanced</div>
+                                </div>
                             </div>
-                            <div class="skill-info">
-                                <div class="skill-name">HTML</div>
-                                <div class="skill-level">Advanced</div>
+                            <div class="skill-card">
+                                <div class="skill-icon">
+                                    <img src="../assets/icons/css-3.png" alt="CSS" class="skill-icon-img" />
+                                </div>
+                                <div class="skill-info">
+                                    <div class="skill-name">CSS</div>
+                                    <div class="skill-level">Advanced</div>
+                                </div>
+                            </div>
+                            <div class="skill-card">
+                                <div class="skill-icon">
+                                    <img src="../assets/icons/js.png" alt="JavaScript" class="skill-icon-img" />
+                                </div>
+                                <div class="skill-info">
+                                    <div class="skill-name">JavaScript</div>
+                                    <div class="skill-level">Intermediate</div>
+                                </div>
                             </div>
                         </div>
-                        <div class="skill-card">
-                            <div class="skill-icon">
-                                <img src="/assets/icons/css-3.png" alt="CSS" class="skill-icon-img" />
-                            </div>
-                            <div class="skill-info">
-                                <div class="skill-name">CSS</div>
-                                <div class="skill-level">Advanced</div>
-                            </div>
-                        </div>
-                        <div class="skill-card">
-                            <div class="skill-icon">
-                                <img src="/assets/icons/js.png" alt="JavaScript" class="skill-icon-img" />
-                            </div>
-                            <div class="skill-info">
-                                <div class="skill-name">JavaScript</div>
-                                <div class="skill-level">Intermediate</div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+                    </section>
             </li>
             <li class="team-card" data-profile="mike">
                 <div class="team-photo-glow">
-                    <img src="/assets/jd.jpg" alt="Team Member 4" class="team-photo-large" />
+                    <img src="../assets/jd.jpg" alt="Team Member 4" class="team-photo-large" />
                 </div>
                 <div class="team-info">
                     <div class="team-name">JD</div>
                     <div class="team-role">Back-end Developer</div>
-                   <section class="skills-section">
-                    <div class="skills-grid-container">
-                        <div class="skill-card">
-                            <div class="skill-icon">
-                                <img src="/assets/icons/html.png" alt="HTML" class="skill-icon-img" />
+                    <section class="skills-section">
+                        <div class="skills-grid-container">
+                            <div class="skill-card">
+                                <div class="skill-icon">
+                                    <img src="../assets/icons/html.png" alt="HTML" class="skill-icon-img" />
+                                </div>
+                                <div class="skill-info">
+                                    <div class="skill-name">HTML</div>
+                                    <div class="skill-level">Advanced</div>
+                                </div>
                             </div>
-                            <div class="skill-info">
-                                <div class="skill-name">HTML</div>
-                                <div class="skill-level">Advanced</div>
+                            <div class="skill-card">
+                                <div class="skill-icon">
+                                    <img src="../assets/icons/css-3.png" alt="CSS" class="skill-icon-img" />
+                                </div>
+                                <div class="skill-info">
+                                    <div class="skill-name">CSS</div>
+                                    <div class="skill-level">Advanced</div>
+                                </div>
+                            </div>
+                            <div class="skill-card">
+                                <div class="skill-icon">
+                                    <img src="../assets/icons/js.png" alt="JavaScript" class="skill-icon-img" />
+                                </div>
+                                <div class="skill-info">
+                                    <div class="skill-name">JavaScript</div>
+                                    <div class="skill-level">Intermediate</div>
+                                </div>
                             </div>
                         </div>
-                        <div class="skill-card">
-                            <div class="skill-icon">
-                                <img src="/assets/icons/css-3.png" alt="CSS" class="skill-icon-img" />
-                            </div>
-                            <div class="skill-info">
-                                <div class="skill-name">CSS</div>
-                                <div class="skill-level">Advanced</div>
-                            </div>
-                        </div>
-                        <div class="skill-card">
-                            <div class="skill-icon">
-                                <img src="/assets/icons/js.png" alt="JavaScript" class="skill-icon-img" />
-                            </div>
-                            <div class="skill-info">
-                                <div class="skill-name">JavaScript</div>
-                                <div class="skill-level">Intermediate</div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+                    </section>
             </li>
             </li>
         </ul>
     </section>
-    <script src="/controllers/main.js"></script>
+    <script src="../user/user.js"></script>
 </body>
-</html>
 
-    <!-- Demo Content -->
-    <div class="demo-content">
-        <h1>CookITHow Recipe Finder</h1>
-        <p class="welcome-message" id="welcomeMessage">Please log in to access all features</p>
-        <p class="scroll-hint">Scroll down to see navbar behavior...</p>
-    </div>
-
-    <script src="/user/user.js"></script>
-</body>
 </html>

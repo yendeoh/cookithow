@@ -1,323 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-
 :root {
   --light-bg: #f8f9fa;
-  --text-dark: #03071E;
-  --primary-color: #FAA307;
-  --primary-dark: #03071E;
-  --text-color: #FAA307;
-  --orange-color: #FAA307;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: "Poppins", sans-serif;
-  background-color: #000;
-  color: #FAA307;
-  overflow-x: hidden;
-}
-
-.navbar-container {
-  position: fixed;
-  width: 100%;
-  top: 0;
-  right: 0;
-  z-index: 1000;
-  text-shadow: #000000 2px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background-color: rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(10px);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  padding: 20px 100px;
-  transition: all 0.3s ease;
-}
-
-.logo {
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-  display: flex;
-  align-items: flex-start;
-  font-size: 2.1rem;
-  font-weight: 600;
-  color: var(--text-color);
-  column-gap: 0.5rem;
-  text-decoration: none;
-  margin-left: -80px;
-}
-
-.logo .bx {
-  font-size: 24px;
-  color: var(--orange-color);
-}
-
-.navbar {
-  list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-  column-gap: .5rem;
-}
-
-.navbar a {
-  text-decoration: none;
-  color: var(--text-color);
-  font-size: 1.2rem;
-  font-weight: 500;
-  padding: 0.5rem 1rem;
-  transition: all 0.3s ease;
-  border-radius: 5rem;
-}
-
-.navbar a:hover,
-.navbar .home-active {
-  background: #ff7e00;
-  border-radius: 5rem;
-  color: #000000;
-  transition: background 0.5s;
-}
-
-/* Signup/Login button styles */  
-.Signup {
-  margin-right: -50rem;
-  margin-left: -20px;
-  font-size: 1.2rem;
-  font-weight: 500;
-  padding: 0.5rem 1rem;
-  text-align: justify;
-  display: inline-block;
-  vertical-align: middle;
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-family: "Poppins", sans-serif;
-}
-
-.profile-container {
-  position: relative;
-  display: inline-block;
-  margin: auto;
-  margin-right: -50rem;
-  margin-left: 50px;
-}
-
-.profile-button {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  background: none;
-  border: none;
-  color: var(--text-color);
-  font-size: 1.2rem;
-  font-weight: 500;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  border-radius: 5rem;
-  transition: all 0.3s ease;
-  font-family: "Poppins", sans-serif;
-  text-decoration: none;
-}
-
-.profile-button:hover,
-.Signup:hover {
-  background: #ff7e00;
-  border-radius: 5rem;
-  color: #000000;
-  transition: background 0.5s;
-
-}
-
-.profile-avatar {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid var(--text-color);
-
-}
-
-.profile-dropdown {
-  position: absolute;
-  top: 100%;
-  right: 0;
-  background-color: rgba(0, 0, 0, 0.9);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(250, 163, 7, 0.3);
-  border-radius: 8px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-  min-width: 200px;
-  padding: 1rem 0;
-  margin-top: 0.5rem;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-10px);
-  transition: all 0.3s ease;
-}
-
-.profile-dropdown.open {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-}
-
-.profile-info {
-  padding: 0 1rem 1rem;
-  border-bottom: 1px solid rgba(250, 163, 7, 0.3);
-  margin-bottom: 0.5rem;
-}
-
-.profile-name {
-  color: #fff;
-  font-weight: 600;
-  margin-bottom: 0.25rem;
-}
-
-.profile-email {
-  color: #ccc;
-  font-size: 0.9rem;
-}
-
-.dropdown-item {
-  display: block;
-  width: 100%;
-  padding: 0.75rem 1rem;
-  color: var(--text-color);
-  text-decoration: none;
-  font-size: 1rem;
-  transition: all 0.3s ease;
-  border: none;
-  background: none;
-  text-align: left;
-  cursor: pointer;
-  font-family: "Poppins", sans-serif;
-}
-
-.dropdown-item:hover {
-  background-color: rgba(250, 163, 7, 0.1);
-  color: #ff7e00;
-}
-
-.menu-icon {
-  font-size: 24px;
-  cursor: pointer;
-  z-index: 10001;
-  display: none;
-  color: var(--text-color);
-}
-
-/* Demo content styles */
-.demo-content {
-  height: 200vh;
-  background: linear-gradient(45deg, #000 0%, #111 50%, #000 100%);
-  padding-top: 100px;
-  color: #FAA307;
-  text-align: center;
-  font-size: 2rem;
-}
-
-.welcome-message {
-  margin-top: 2rem;
-  font-size: 1.2rem;
-}
-
-.scroll-hint {
-  margin-top: 1rem;
-  font-size: 1rem;
-  color: #ccc;
-}
-
-.demo-button {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background: var(--primary-color);
-  color: #000;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-family: "Poppins", sans-serif;
-  font-weight: 600;
-  z-index: 1001;
-}
-
-.demo-button:hover {
-  background: #ff7e00;
-}
-
-/* Mobile Responsive */
-@media (max-width: 768px) {
-  .navbar-container {
-    padding: 15px 20px;
-  }
-
-  .logo {
-    font-size: 1.8rem;
-    margin-left: 0;
-  }
-
-  .navbar {
-    position: fixed;
-    top: 70px;
-    left: -100%;
-    width: 100%;
-    height: calc(100vh - 70px);
-    background-color: rgba(0, 0, 0, 0.95);
-    backdrop-filter: blur(10px);
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    padding-top: 2rem;
-    transition: left 0.3s ease;
-  }
-  
-  .navbar.menu-open {
-    left: 0;
-  }
-
-  .navbar a {
-    font-size: 1.5rem;
-    margin: 1rem 0;
-  }
-
-  .auth-section {
-    margin: 0;
-    position: fixed;
-    bottom: 2rem;
-    left: 5 0%;
-    transform: translateX(-50%);
-  }
-
-  .Signup {
-    margin-right: 0;
-    margin-left: 0;
-  }
-
-  .menu-icon {
-    display: block;
-  }
-
-  .profile-dropdown {
-    right: auto;
-    left: 50%;
-    transform: translateX(-50%) translateY(-10px);
-  }
-
-  .profile-dropdown.open {
-    transform: translateX(-50%) translateY(0);
-  }
-}
-
-
-:root {
-  --light-bg: #f8f9fa;
-  --text-dark: #03071E;
-  --primary-color: #FAA307;
-  --primary-dark: #03071E;
+  --text-dark: #03071e;
+  --primary-color: #faa307;
+  --primary-dark: #03071e;
 }
 
 * {
@@ -336,9 +21,9 @@ body {
   line-height: 100%;
   max-width: 100vw;
   overflow-x: hidden;
-  color: #FAA307;
+  color: #faa307;
   padding-top: 80px;
-  background-color: #000; /* Add solid background for body */
+  background-color: #000000; /* Add solid background for body */
 }
 
 section {
@@ -350,8 +35,8 @@ section {
   color: white;
   opacity: 1;
   transform: none;
-  display: block; 
-  min-height: unset
+  display: block;
+  min-height: unset;
 }
 
 header {
@@ -364,11 +49,166 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: transparent;
   backdrop-filter: blur(10px);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 11px rgba(0, 0, 0, 0.1);
   padding: 20px 100px;
   transition: all 0.3s ease;
+}
+.home-swiper {
+  height: 50vh;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  font-family: "Times New Roman", Times, serif;
+  padding: 8rem 10%;
+  background-image: url(../assets/cook.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  padding-top: 70px;
+}
+
+#home {
+  margin-bottom: 0;
+}
+
+#cuisines {
+  margin-top: 0;
+  padding: 8rem 10%;
+  background-image: url(/assets/cook.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  color: white;
+  position: relative;
+  text-align: center;
+}
+
+.cuisines-text {
+  margin-bottom: 2rem;
+  font-size: 1.8rem;
+  line-height: 1.5;
+}
+
+.carousel-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-x: auto;
+  padding: 20px 0;
+  gap: 15px;
+  max-width: 100%;
+  margin: 0;
+  background-color: transparent;
+  border: none;
+}
+
+.carousel-track {
+  display: flex;
+  gap: 15px;
+}
+
+.carousel-container img {
+  border-radius: 10px;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background-color: transparent;
+  /border: none; /* Remove any border */
+}
+
+.carousel-container img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Ensure responsiveness */
+@media (max-width: 800px) {
+  .carousel-container img {
+    width: 200px;
+    height: 150px;
+  }
+}
+
+@media (max-width: 600px) {
+  .carousel-container img {
+    width: 150px;
+    height: 120px;
+    position: relative;
+  }
+}
+
+.home-swiper::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50vh;
+  background: transparent;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.home-swiper > * {
+  position: relative;
+  z-index: 2;
+}
+
+.home-text {
+  flex: 1;
+  max-width: 500px;
+}
+
+.home-text span {
+  font-family: "Oswald", sans-serif;
+  padding: 15px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--green-color);
+  font-weight: 700;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.home-text h1 {
+  font-size: 2.5rem;
+  color: var(--text-color);
+  font-weight: 800;
+  margin-bottom: 2rem;
+  line-height: 1.4;
+}
+
+#rotatingImage {
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  object-fit: cover;
+  transition: opacity 0.2s ease-in-out, transform 4s linear;
+  animation: spin 10s linear infinite;
+  margin: 0 0 0 auto;
+  display: block;
+}
+
+.circle-img {
+  width: 400px;
+  height: 400px;
+  border-radius: 100%;
+  object-fit: contain;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* Apply background image only to recipe finder container */
@@ -377,8 +217,8 @@ header {
   margin: 0 auto;
   width: 100%;
   max-width: 100vw;
-  min-height: 100vh; /* Changed from height to min-height */
-  background-image: url(/assets/cook.png);
+  min-height: 30vh; /* Changed from height to min-height */
+  background-image: url(../assets/cook.png);
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -390,13 +230,13 @@ header {
 
 /* Add overlay to recipe section for better text readability */
 .recipe-finder-container::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.3); /* Dark overlay */
+  background: transparent; /* Dark overlay */
   pointer-events: none;
   z-index: 1;
 }
@@ -416,7 +256,7 @@ h1 {
 }
 
 .logo {
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
   display: flex;
   align-items: flex-start;
   font-size: 2.1rem;
@@ -436,7 +276,7 @@ h1 {
   list-style: none;
   display: flex;
   flex-wrap: wrap;
-  column-gap: .5rem;
+  column-gap: 0.5rem;
 }
 
 .navbar a {
@@ -540,7 +380,7 @@ h1 {
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 15px;
   margin-top: 30px;
-  margin-bottom: 60px; 
+  margin-bottom: 60px;
 }
 
 .recipe-item img {
@@ -618,7 +458,7 @@ h1 {
   position: absolute;
   top: 15px;
   right: 15px;
-  background-color: tra;
+  background-color: transparent;
   border: 1px solid #e9ecef;
   border-radius: 50%;
   height: 35px;
@@ -727,7 +567,7 @@ h1 {
 #category-select {
   padding: 10px 15px;
   background-color: transparent;
-  color: #FAA307;
+  color: #faa307;
   font-size: 14px;
   font-weight: bold;
   cursor: pointer;
@@ -741,7 +581,7 @@ h1 {
 #area-select {
   padding: 10px;
   background-color: transparent;
-  color: #FAA307;
+  color: #faa307;
   font-size: 14px;
   font-weight: bold;
   cursor: pointer;
@@ -751,10 +591,6 @@ h1 {
 #area-select:hover {
   border-color: #ffa500;
 }
-
-/* ============================================
-   TEAM SECTION STYLES - NOW WITH VIDEO BACKGROUND
-   ============================================ */
 
 /* Team Section Container - Enhanced with Video Background */
 #team-section {
@@ -766,7 +602,7 @@ h1 {
   padding: 80px 20px 60px;
   position: relative;
   overflow: hidden;
-  margin-top: 0;
+  margin-top: 70px;
   border-top: 3px solid var(--primary-color);
 }
 
@@ -791,9 +627,9 @@ h1 {
   width: 100%;
   height: 100%;
   background: linear-gradient(
-    135deg, 
-    rgba(0, 0, 0, 0.7) 0%, 
-    rgba(45, 45, 45, 0.6) 50%, 
+    135deg,
+    rgba(0, 0, 0, 0.7) 0%,
+    rgba(45, 45, 45, 0.6) 50%,
     rgba(26, 26, 26, 0.8) 100%
   );
   z-index: 1;
@@ -802,25 +638,41 @@ h1 {
 
 /* Fallback background pattern in case video doesn't load */
 #team-section::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   background: linear-gradient(135deg, #0a0a0a 0%, #2d2d2d 50%, #1a1a1a 100%);
-  background-image: 
-    radial-gradient(circle at 20% 20%, rgba(250, 163, 7, 0.05) 0%, transparent 50%),
-    radial-gradient(circle at 80% 80%, rgba(250, 163, 7, 0.05) 0%, transparent 50%),
-    radial-gradient(circle at 50% 50%, rgba(250, 163, 7, 0.02) 0%, transparent 70%);
+  background-image: radial-gradient(
+      circle at 20% 20%,
+      rgba(250, 163, 7, 0.05) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 80%,
+      rgba(250, 163, 7, 0.05) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 50% 50%,
+      rgba(250, 163, 7, 0.02) 0%,
+      transparent 70%
+    );
   pointer-events: none;
   animation: backgroundShift 20s ease-in-out infinite;
   z-index: -1; /* Behind video */
 }
 
 @keyframes backgroundShift {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.7; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
 }
 
 /* Team Title */
@@ -852,7 +704,12 @@ h1 {
 
 /* Individual Team Card - List Item */
 .team-card {
-  background: rgba(255, 255, 255, 0.08); /* Slightly more opaque for video background */
+  background: rgba(
+    255,
+    255,
+    255,
+    0.08
+  ); /* Slightly more opaque for video background */
   border-radius: 20px;
   padding: 40px 30px;
   text-align: center;
@@ -895,10 +752,8 @@ h1 {
   height: 180px;
   border-radius: 50%;
   object-fit: cover;
-  border: 4px solid #FAA307;
-  box-shadow: 
-    0 0 0 8px rgba(250, 163, 7, 0.1),
-    0 0 40px rgba(250, 163, 7, 0.3),
+  border: 4px solid #faa307;
+  box-shadow: 0 0 0 8px rgba(250, 163, 7, 0.1), 0 0 40px rgba(250, 163, 7, 0.3),
     0 0 80px rgba(250, 163, 7, 0.2);
   transition: all 0.3s ease;
   position: relative;
@@ -907,9 +762,7 @@ h1 {
 
 /* Enhanced glow on hover */
 .team-card:hover .team-photo-large {
-  box-shadow: 
-    0 0 0 8px rgba(250, 163, 7, 0.2),
-    0 0 60px rgba(250, 163, 7, 0.4),
+  box-shadow: 0 0 0 8px rgba(250, 163, 7, 0.2), 0 0 60px rgba(250, 163, 7, 0.4),
     0 0 120px rgba(250, 163, 7, 0.3);
   transform: scale(1.05);
 }
@@ -934,7 +787,7 @@ h1 {
 /* Team Role */
 .team-role {
   font-size: 1.1rem;
-  color: #FAA307;
+  color: #faa307;
   font-weight: 500;
   margin-bottom: 20px;
   text-transform: uppercase;
@@ -958,16 +811,16 @@ h1 {
     gap: 30px;
     max-width: 800px;
   }
-  
+
   .team-card {
     padding: 30px 20px;
   }
-  
+
   .team-photo-large {
     width: 150px;
     height: 150px;
   }
-  
+
   .team-name {
     font-size: 1.8rem;
   }
@@ -977,35 +830,35 @@ h1 {
   #team-section {
     padding: 60px 15px 40px;
   }
-  
+
   #team-section .our-team-title {
     font-size: 2.5rem;
     margin-bottom: 60px;
   }
-  
+
   .team-grid-container {
     grid-template-columns: 1fr;
     gap: 30px;
     max-width: 400px;
   }
-  
+
   .team-card {
     padding: 30px 25px;
   }
-  
+
   .team-photo-large {
     width: 160px;
     height: 160px;
   }
-  
+
   .team-name {
     font-size: 1.6rem;
   }
-  
+
   .team-role {
     font-size: 1rem;
   }
-  
+
   .team-desc {
     font-size: 0.9rem;
   }
@@ -1015,77 +868,181 @@ h1 {
   .team-card {
     padding: 25px 20px;
   }
-  
+
   .team-photo-large {
     width: 140px;
     height: 140px;
   }
-  
+
   .team-name {
     font-size: 1.4rem;
   }
-  
+
   .team-role {
     font-size: 0.9rem;
   }
-  
+
   .team-desc {
     font-size: 0.85rem;
   }
 }
 
-/* Additional Video Background Controls (Optional) */
-/* If you want to pause/play video on hover */
-/*
-#team-section:hover .team-video-background {
-  animation-play-state: paused;
-}
-*/
-
 /* If you want different video opacity on mobile */
 @media (max-width: 768px) {
   .team-video-background {
-    opacity: 1.0; /* Slightly less visible on mobile */
+    opacity: 1; /* Slightly less visible on mobile */
   }
 }
 
 /* Skills Section */
 .skills-section {
-    padding: 1rem 1rem;
-    background: transparent;
+  padding: 1rem 1rem;
+  background: transparent;
 }
 
 .skills-grid-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-    gap: 2rem;
-    max-width: 1200px;
-    margin:  auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: auto;
 }
 
 .skill-icon {
-    margin-bottom: 1.5rem;
-    justify-content: center;
+  margin-bottom: 1.5rem;
+  justify-content: center;
 }
 
 .skill-icon-img {
-    width: 60px;
-    height: 60px;
-    object-fit: contain;
-    justify-content: center;
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  justify-content: center;
 }
 
 .skill-name {
-    font-size: 1.0rem;
-    font-weight: 600;
-    color: #e0cccc;
-    margin-bottom: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #e0cccc;
+  margin-bottom: 0.5rem;
 }
 
 .skill-level {
-    font-size: 1rem;
-    color: #888;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+  font-size: 1rem;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.card {
+  position: relative;
+  width: 300px;
+  height: 200px;
+  background-color: #f2f2f2;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  perspective: 1000px;
+  box-shadow: 0 0 0 5px #ffffff80;
+  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.card svg {
+  object-fit: cover;
+  width: 48px;
+  fill: #333;
+  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(255, 255, 255, 0.2);
+}
+
+.card__content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: #f2f2f2;
+  transform: rotateX(-90deg);
+  transform-origin: bottom;
+  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.card:hover .card__content {
+  transform: rotateX(0deg);
+}
+
+.card__title {
+  margin: 0 !important;
+  font-size: 24px !important;
+  color: #333 !important;
+  font-weight: 700 !important;
+}
+
+.card:hover svg {
+  scale: 0;
+}
+
+.card__description {
+  margin: 10px 0 0 !important;
+  font-size: 14px !important;
+  color: #777 !important;
+  line-height: 1.4 !important;
+}
+
+.carousel-container {
+  display: flex;
+  justify-content: center;
+  overflow-x: auto;
+  padding: 20px 0;
+}
+
+.carousel-track {
+  display: flex;
+  animation: scroll-left-loop var(--carousel-speed) linear infinite;
+}
+
+.card {
+  flex-shrink: 0;
+  margin-right: 20px;
+}
+
+@keyframes scroll-left-loop {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(calc(-50%));
+  }
+}
+
+@keyframes scroll-right-loop {
+  0% {
+    transform: translateX(calc(-50%));
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+#carousel1 .carousel-track {
+  animation: scroll-left-loop var(--carousel-speed-1) linear infinite;
+}
+
+#carousel2 .carousel-track {
+  animation: scroll-right-loop var(--carousel-speed-2) linear infinite;
+}
