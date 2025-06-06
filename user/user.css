@@ -1233,6 +1233,7 @@ h1 {
   cursor: pointer;
   margin: 10px 10px 0 0;
   transition: background 0.3s;
+  margin-right: 45px;
 }
 .save-recipe-btn:hover,
 .finish-recipe-btn:hover {

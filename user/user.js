@@ -625,6 +625,8 @@ function navigateToProfile(profileId) {
   }
 }
 
+
+
 // Function to get positioning based on profile layout
 function getProfilePosition(profileId, profileCard) {
   const rect = profileCard.getBoundingClientRect();
