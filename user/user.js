@@ -369,11 +369,9 @@ modal.addEventListener("click", (e) => {
 
 function displayRecipeDetails(recipe) {
   const ingredients = [];
-
   for (let i = 1; i <= 20; i++) {
     const ingredient = recipe[`strIngredient${i}`]?.trim();
     const measure = recipe[`strMeasure${i}`]?.trim();
-
     if (ingredient) {
       ingredients.push(`<li>${measure ? `${measure} ` : ""}${ingredient}</li>`);
     } else {
@@ -400,8 +398,16 @@ function displayRecipeDetails(recipe) {
     ? `<div class="source-wrapper"><a href="${recipe.strSource}" target="_blank">View Original Source</a></div>`
     : "";
 
-  // --- Insert the Save button and checkbox for marking as finished ---
+  // Add the custom checkbox at the top of the modal content
   modalContent.innerHTML = `
+    <div class="customCheckBoxHolder">
+      <input type="checkbox" id="finishedCheckBox" class="customCheckBoxInput">
+      <label for="finishedCheckBox" class="customCheckBoxWrapper">
+        <div class="customCheckBox">
+          <div class="inner">Mark as Finished</div>
+        </div>
+      </label>
+    </div>
     <h2>${recipe.strMeal}</h2>
     <img src="${recipe.strMealThumb}" alt="${recipe.strMeal}">
     ${categoryHTML}
@@ -410,34 +416,42 @@ function displayRecipeDetails(recipe) {
     ${instructionsHTML}
     ${youtubeHTML}
     ${sourceHTML}
-    <div style="margin-top:1.5rem;">
-      <button id="save-recipe-btn" class="save-recipe-btn">Save</button>
-      <input type="checkbox" id="dish-finished-checkbox">
-      <label for="dish-finished-checkbox">Mark this dish as finished</label>
-    </div>
   `;
 
-  // Save button logic
+  // Save button logic (already present in modal-header-actions)
   const saveBtn = document.getElementById("save-recipe-btn");
   if (saveBtn) {
-    saveBtn.addEventListener("click", function () {
-      let saved = JSON.parse(localStorage.getItem('savedRecipes') || '[]');
-      if (!saved.some(r => r.idMeal === recipe.idMeal)) {
+    saveBtn.onclick = function () {
+      let saved = JSON.parse(localStorage.getItem("savedRecipes") || "[]");
+      if (!saved.some((r) => r.idMeal === recipe.idMeal)) {
         saved.push(recipe);
-        localStorage.setItem('savedRecipes', JSON.stringify(saved));
-        alert('Recipe saved!');
+        localStorage.setItem("savedRecipes", JSON.stringify(saved));
+        alert("Recipe saved!");
       } else {
-        alert('Recipe already saved!');
+        alert("Recipe already saved!");
       }
-    });
+    };
+  }
+  const closeBtn = document.getElementById("modal-close-btn");
+  if (closeBtn) {
+    closeBtn.onclick = closeModal;
   }
 
   // Finished checkbox logic
-  const finishedCheckbox = document.getElementById("dish-finished-checkbox");
+  const finishedCheckbox = document.getElementById("finishedCheckBox");
   if (finishedCheckbox) {
     finishedCheckbox.addEventListener("change", function (e) {
       if (e.target.checked) {
-        saveDishCompletionToDatabase(recipe);
+        // Save to finished recipes in localStorage
+        let finished = JSON.parse(
+          localStorage.getItem("finishedRecipes") || "[]"
+        );
+        if (!finished.some((r) => r.idMeal === recipe.idMeal)) {
+          finished.push(recipe);
+          localStorage.setItem("finishedRecipes", JSON.stringify(finished));
+        }
+        closeModal();
+        openFinishedPopup();
       }
     });
   }
@@ -445,19 +459,19 @@ function displayRecipeDetails(recipe) {
 
 // Add this function anywhere in your JS file (outside displayRecipeDetails)
 function saveDishCompletionToDatabase(recipe) {
-  fetch('/api/finished', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(recipe)
+  fetch("/api/finished", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(recipe),
   })
-  .then(res => res.json())
-  .then(data => {
-    alert('Marked as finished and saved to database!');
-  })
-  .catch(err => {
-    alert('Failed to save to database.');
-    console.error(err);
-  });
+    .then((res) => res.json())
+    .then((data) => {
+      alert("Marked as finished and saved to database!");
+    })
+    .catch((err) => {
+      alert("Failed to save to database.");
+      console.error(err);
+    });
 }
 
 function scrollToRecipeFinder() {
@@ -806,37 +820,74 @@ function reinitializeProfileAutoType() {
   initProfileAutoType();
 }
 function openSavedPopup() {
-    const saved = JSON.parse(localStorage.getItem('savedRecipes') || '[]');
-    const list = document.getElementById('saved-list');
-    if (saved.length) {
-        list.innerHTML = saved.map(r => `
-            <div class="saved-dish-card" data-id="${r.idMeal}">
-                <img src="${r.strMealThumb}" alt="${r.strMeal}">
-                <div class="saved-dish-title">${r.strMeal}</div>
-            </div>
-        `).join('');
-        // Make each card clickable to show the recipe popup again
-        list.querySelectorAll('.saved-dish-card').forEach(card => {
-            card.onclick = () => getRecipeDetails(card.getAttribute('data-id'));
-        });
-    } else {
-        list.innerHTML = '<p style="color:#fff;text-align:center;">No saved recipes.</p>';
-    }
-    document.getElementById('saved-popup').classList.remove('hidden');
+  const saved = JSON.parse(localStorage.getItem("savedRecipes") || "[]");
+  const list = document.getElementById("saved-list");
+  if (saved.length) {
+    list.innerHTML = saved
+      .map(
+        (r) => `
+          <div class="saved-dish-card" data-id="${r.idMeal}">
+            <img src="${r.strMealThumb}" alt="${r.strMeal}">
+            <div class="saved-dish-title">${r.strMeal}</div>
+            <button class="delete-saved-btn" data-id="${r.idMeal}">Delete</button>
+          </div>
+        `
+      )
+      .join("");
+    // Make each card clickable to show the recipe popup again
+    list.querySelectorAll(".saved-dish-card img").forEach((img) => {
+      img.onclick = (e) => {
+        const card = e.target.closest(".saved-dish-card");
+        getRecipeDetails(card.getAttribute("data-id"));
+        closeSavedPopup();
+      };
+    });
+    // Add delete button logic
+    list.querySelectorAll(".delete-saved-btn").forEach((btn) => {
+      btn.onclick = (e) => {
+        e.stopPropagation();
+        const id = btn.getAttribute("data-id");
+        showDeleteConfirmPopup(id);
+      };
+    });
+  } else {
+    list.innerHTML =
+      '<p style="color:#fff;text-align:center;">No saved recipes.</p>';
+  }
+  document.getElementById("saved-popup").classList.remove("hidden");
 }
 function closeSavedPopup() {
-    document.getElementById('saved-popup').classList.add('hidden');
+  document.getElementById("saved-popup").classList.add("hidden");
 }
 function openFinishedPopup() {
-    const finished = JSON.parse(localStorage.getItem('finishedRecipes') || '[]');
-    const list = document.getElementById('finished-list');
-    list.innerHTML = finished.length
-        ? finished.map(r => `<div><strong>${r.strMeal}</strong></div>`).join('')
-        : '<p>No finished recipes.</p>';
-    document.getElementById('finished-popup').classList.remove('hidden');
+  const finished = JSON.parse(localStorage.getItem("finishedRecipes") || "[]");
+  const list = document.getElementById("finished-list");
+  if (finished.length) {
+    list.innerHTML = finished
+      .map(
+        (r) => `
+          <div class="saved-dish-card" data-id="${r.idMeal}">
+            <img src="${r.strMealThumb}" alt="${r.strMeal}">
+            <div class="saved-dish-title">${r.strMeal}</div>
+          </div>
+        `
+      )
+      .join("");
+    // Make each card clickable to show the recipe popup again
+    list.querySelectorAll(".saved-dish-card").forEach((card) => {
+      card.onclick = () => {
+        closeFinishedPopup();
+        getRecipeDetails(card.getAttribute("data-id"));
+      };
+    });
+  } else {
+    list.innerHTML =
+      '<p style="color:#fff;text-align:center;">No finished recipes.</p>';
+  }
+  document.getElementById("finished-popup").classList.remove("hidden");
 }
 function closeFinishedPopup() {
-    document.getElementById('finished-popup').classList.add('hidden');
+  document.getElementById("finished-popup").classList.add("hidden");
 }
 function setupCarousel(carouselId) {
   const carouselContainer = document.getElementById(carouselId);
@@ -912,6 +963,24 @@ document.addEventListener("DOMContentLoaded", function () {
       imageElement.style.opacity = 1;
     }, 1);
   }, 7000);
-
-  
 });
+
+function showDeleteConfirmPopup(id) {
+  const popup = document.getElementById("delete-confirm-popup");
+  popup.classList.remove("hidden");
+
+  // Remove previous listeners if any
+  const yesBtn = document.getElementById("delete-confirm-yes");
+  const noBtn = document.getElementById("delete-confirm-no");
+  yesBtn.onclick = function () {
+    // Delete from savedRecipes
+    let saved = JSON.parse(localStorage.getItem("savedRecipes") || "[]");
+    saved = saved.filter((r) => r.idMeal !== id);
+    localStorage.setItem("savedRecipes", JSON.stringify(saved));
+    popup.classList.add("hidden");
+    openSavedPopup(); // Refresh the saved popup
+  };
+  noBtn.onclick = function () {
+    popup.classList.add("hidden");
+  };
+}

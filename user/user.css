@@ -161,7 +161,7 @@ header {
   position: absolute;
   background-color: #222;
   min-width: 160px;
-  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   border-radius: 8px;
   z-index: 1000;
   right: 0;
@@ -594,6 +594,12 @@ h1 {
   backdrop-filter: blur(0px);
 }
 
+.modal-container.fade-out {
+  opacity: 0 !important;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+
 .modal-content {
   background-color: #181717;
   max-width: 900px;
@@ -606,6 +612,7 @@ h1 {
   position: relative;
   transform: scale(1);
   transition: transform 0.3s ease;
+  padding-top: 60px !important; /* Add enough space for sticky header */
 }
 
 .modal-container.hidden .modal-content {
@@ -635,6 +642,60 @@ h1 {
   transform: rotate(135deg);
   color: var(--text-dark);
   background-color: #e2e6ea;
+}
+
+.modal-header-actions {
+  position: sticky;
+  top: 0;
+  background: #181717;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px; /* Increase gap between buttons */
+  z-index: 10;
+  padding: 10px 20px 10px 20px; /* Add horizontal padding */
+  border-bottom: 1px solid #333;
+  min-height: 40px; /* Ensure enough height for buttons */
+}
+
+.save-recipe-btn {
+  background: #faa307;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 16px;
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+.save-recipe-btn:hover {
+  background: #ff7e00;
+}
+
+.modal-close-btn {
+  background: #e74c3c;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  font-size: 1.3rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  transform: rotate(45deg);
+}
+.modal-close-btn:hover {
+  background: #c0392b;
+  transform: rotate(135deg);
+}
+
+/* Remove extra padding at the top of modal-content if present */
+.modal-content {
+  padding-top: 0 !important;
 }
 
 #recipe-details-content h2 {
@@ -1160,20 +1221,22 @@ h1 {
   color: #777 !important;
   line-height: 1.4 !important;
 }
-.save-recipe-btn, .finish-recipe-btn {
-    background: #faa307;
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    padding: 10px 25px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    margin: 10px 10px 0 0;
-    transition: background 0.3s;
+.save-recipe-btn,
+.finish-recipe-btn {
+  background: #faa307;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 25px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin: 10px 10px 0 0;
+  transition: background 0.3s;
 }
-.save-recipe-btn:hover, .finish-recipe-btn:hover {
-    background: #ff7e00;
+.save-recipe-btn:hover,
+.finish-recipe-btn:hover {
+  background: #ff7e00;
 }
 .saved-list-grid {
   display: grid;
@@ -1186,7 +1249,7 @@ h1 {
   background: #222;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
   cursor: pointer;
   transition: transform 0.2s, box-shadow 0.2s;
   text-align: center;
@@ -1195,7 +1258,7 @@ h1 {
 
 .saved-dish-card:hover {
   transform: translateY(-6px) scale(1.03);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.28);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
 }
 
 .saved-dish-card img {
@@ -1256,4 +1319,115 @@ h1 {
 
 #carousel2 .carousel-track {
   animation: scroll-right-loop var(--carousel-speed-2) linear infinite;
+}
+
+/* --- Custom Finished Checkbox --- */
+.customCheckBoxHolder {
+  margin: 5px 0 20px 0;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.customCheckBox {
+  width: fit-content;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  user-select: none;
+  padding: 2px 8px;
+  background-color: rgba(0, 0, 0, 0.16);
+  border-radius: 5px;
+  color: rgba(255, 255, 255, 0.7);
+  transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition-duration: 300ms;
+  transition-property: color, background-color, box-shadow;
+  display: flex;
+  height: 32px;
+  align-items: center;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 1px 0px inset,
+    rgba(255, 255, 255, 0.17) 0px 1px 1px 0px;
+  outline: none;
+  justify-content: center;
+  min-width: 110px;
+}
+
+.customCheckBox:hover {
+  background-color: #2c2c2c;
+  color: white;
+  box-shadow: rgba(0, 0, 0, 0.23) 0px -4px 1px 0px inset,
+    rgba(255, 255, 255, 0.17) 0px -1px 1px 0px,
+    rgba(0, 0, 0, 0.17) 0px 2px 4px 1px;
+}
+
+.customCheckBox .inner {
+  font-size: 18px;
+  font-weight: 900;
+  pointer-events: none;
+  transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition-duration: 300ms;
+  transition-property: transform;
+  transform: translateY(0px);
+}
+
+.customCheckBox:hover .inner {
+  transform: translateY(-2px);
+}
+
+.customCheckBoxInput {
+  display: none;
+}
+
+.customCheckBoxInput:checked + .customCheckBoxWrapper .customCheckBox {
+  background-color: #2d6737;
+  color: white;
+  box-shadow: rgba(0, 0, 0, 0.23) 0px -4px 1px 0px inset,
+    rgba(255, 255, 255, 0.17) 0px -1px 1px 0px,
+    rgba(0, 0, 0, 0.17) 0px 2px 4px 1px;
+}
+
+.customCheckBoxInput:checked + .customCheckBoxWrapper .customCheckBox .inner {
+  transform: translateY(-2px);
+}
+
+.customCheckBoxInput:checked + .customCheckBoxWrapper .customCheckBox:hover {
+  background-color: #34723f;
+  box-shadow: rgba(0, 0, 0, 0.26) 0px -4px 1px 0px inset,
+    rgba(255, 255, 255, 0.17) 0px -1px 1px 0px,
+    rgba(0, 0, 0, 0.15) 0px 3px 6px 2px;
+}
+
+.customCheckBoxWrapper .customCheckBox:hover .inner {
+  transform: translateY(-2px);
+}
+
+#finished-list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin-top: 30px;
+}
+
+@media (max-width: 900px) {
+  #finished-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 600px) {
+  #finished-list {
+    grid-template-columns: 1fr;
+  }
+}
+.delete-saved-btn {
+  background: #e74c3c;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 4px 12px;
+  margin-top: 8px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background 0.2s;
+}
+.delete-saved-btn:hover {
+  background: #c0392b;
 }
