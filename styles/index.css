@@ -1007,46 +1007,53 @@ h1 {
   line-height: 1.4 !important;
 }
 
+/* --- Carousel styles for cuisines section (moved from index.html) --- */
+.cuisines {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+
 .carousel-container {
-    display: flex;
-    justify-content: center;
-    overflow-x: auto;
-    padding: 20px 0;
+    overflow: hidden;
+    width: 100%;
 }
 
 .carousel-track {
-  display: flex;
-  animation: scroll-left-loop var(--carousel-speed) linear infinite;
+    display: flex;
+    /* fallback animation, will be overridden by specific carousel below */
+    animation: scroll-carousel var(--carousel-speed-1, 20s) linear infinite;
+    will-change: transform;
+}
+
+/* carousel1 scrolls to the right */
+#carousel1 .carousel-track {
+    animation: scroll-carousel-right var(--carousel-speed-1, 20s) linear infinite;
+}
+
+/* carousel2 scrolls to the left */
+#carousel2 .carousel-track {
+    animation: scroll-carousel var(--carousel-speed-2, 20s) linear infinite;
+}
+
+@keyframes scroll-carousel {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+@keyframes scroll-carousel-right {
+    0% {
+        transform: translateX(-50%);
+    }
+    100% {
+        transform: translateX(0);
+    }
 }
 
 .card {
-  flex-shrink: 0;
-  margin-right: 20px;
-}
-
-
-@keyframes scroll-left-loop {
-  0% {
-    transform: translateX(0%);
-  }
-  100% {
-    transform: translateX(calc(-50%));
-  }
-}
-
-@keyframes scroll-right-loop {
-  0% {
-    transform: translateX(calc(-50%));
-  }
-  100% {
-    transform: translateX(0%);
-  }
-}
-
-#carousel1 .carousel-track {
-  animation: scroll-left-loop var(--carousel-speed-1) linear infinite;
-}
-
-#carousel2 .carousel-track {
-  animation: scroll-right-loop var(--carousel-speed-2) linear infinite;
+    flex: 0 0 auto;
+    margin-right: 24px;
 }

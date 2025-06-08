@@ -566,35 +566,35 @@ class AutoTyper {
 const profileData = {
   regod: {
     name: "Ivan",
-    role: "THE MOST KUPAL",
+    role: "The FrontEnd Developer",
     description:
       "A beginner IT programmer. I specialize in building user-friendly interfaces using Java, HTML, and CSS, and I'm passionate about creating clean, responsive designs.",
-    url: "ivan-profile.html", // Add URL for navigation
+    url: "ivan-profile.html", 
   },
   alex: {
     name: "Jep",
-    role: "THE YOUNG DADDY",
+    role: "The FrontEnd Developer",
     description:
       "Frontend developer and UI/UX designer passionate about creating seamless, user-centered digital experiences. Combines clean, responsive code with thoughtful design to craft intuitive interfaces that engage and delight users.",
-    url: "jep-profile.html", // Add URL for navigation
+    url: "jep-profile.html",
   },
   sarah: {
     name: "Rhodney",
     role: "THE MR MILLIONAIRE",
     description:
-      "Frontend developer and UI/UX designer passionate about creating seamless, user-centered digital experiences. Combines clean, responsive code with thoughtful design to craft intuitive interfaces that engage and delight users.",
-    url: "rhodney-profile.html", // Add URL for navigation
+      "UI/UX designer passionate about creating seamless, user-centered digital experiences. Combines clean, responsive code with thoughtful design to craft intuitive interfaces that engage and delight users.",
+    url: "rhodney-profile.html", 
   },
   mike: {
     name: "JD",
-    role: "THE BASSIST AND HARRIZZLER",
+    role: "THE BackEnd Developer",
     description:
       "Expert in server-side development and database optimization for high-performance applications.",
-    url: "jd-profile.html", // Add URL for navigation
+    url: "jd-profile.html", 
   },
 };
 
-// Function to navigate to profile page with smooth transition
+
 function navigateToProfile(profileId) {
   const profileInfo = profileData[profileId];
   if (profileInfo && profileInfo.url) {
@@ -627,44 +627,44 @@ function navigateToProfile(profileId) {
 
 
 
-// Function to get positioning based on profile layout
+
 function getProfilePosition(profileId, profileCard) {
   const rect = profileCard.getBoundingClientRect();
   const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
   const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
 
-  // Position configurations for each profile based on their layout
+
   const positions = {
     regod: {
-      // Ivan - space on the left
+
       left: rect.left + scrollLeft - 320,
       top: rect.top + scrollTop + rect.height / 2 - 75,
       textAlign: "right",
     },
     alex: {
-      // Jep - space on the right
+
       left: rect.right + scrollLeft + 20,
       top: rect.top + scrollTop + rect.height / 2 - 75,
       textAlign: "left",
     },
     sarah: {
-      // Rhodney - space on the left
+
       left: rect.left + scrollLeft - 320,
       top: rect.top + scrollTop + rect.height / 2 - 75,
       textAlign: "right",
     },
     mike: {
-      // JD - space on the right
+
       left: rect.right + scrollLeft + 20,
       top: rect.top + scrollTop + rect.height / 2 - 75,
       textAlign: "left",
     },
   };
 
-  return positions[profileId] || positions.alex; // Default to right side
+  return positions[profileId] || positions.alex; 
 }
 
-// Initialize auto-typing functionality with positioned display
+
 function initProfileAutoType() {
   // Create display container
   const displayContainer = document.createElement("div");
@@ -720,7 +720,7 @@ function initProfileAutoType() {
   displayContainer.appendChild(descriptionElement);
   document.body.appendChild(displayContainer);
 
-  // Create auto-typers
+
   const nameTyper = new AutoTyper(nameElement, { typeSpeed: 80 });
   const roleTyper = new AutoTyper(roleElement, { typeSpeed: 60 });
   const descriptionTyper = new AutoTyper(descriptionElement, { typeSpeed: 40 });
@@ -731,16 +731,15 @@ function initProfileAutoType() {
   profiles.forEach((profile) => {
     const profileId = profile.getAttribute("data-profile");
 
-    // Add click event listener for navigation
     profile.addEventListener("click", (e) => {
-      e.preventDefault(); // Prevent any default behavior
+      e.preventDefault(); 
       navigateToProfile(profileId);
     });
 
-    // Add cursor pointer style to indicate clickability
+   
     profile.style.cursor = "pointer";
 
-    // Hover events for auto-typing
+
     profile.addEventListener("mouseenter", async () => {
       if (profileData[profileId]) {
         const data = profileData[profileId];
@@ -755,7 +754,7 @@ function initProfileAutoType() {
         displayContainer.style.opacity = "1";
         displayContainer.style.visibility = "visible";
 
-        // Start auto-typing sequence
+    
         await nameTyper.type(data.name);
         await new Promise((resolve) => setTimeout(resolve, 200));
         await roleTyper.type(data.role);
@@ -765,16 +764,16 @@ function initProfileAutoType() {
     });
 
     profile.addEventListener("mouseleave", () => {
-      // Stop all typing
+
       nameTyper.stop();
       roleTyper.stop();
       descriptionTyper.stop();
 
-      // Hide display container
+
       displayContainer.style.opacity = "0";
       displayContainer.style.visibility = "hidden";
 
-      // Clear content after animation
+
       setTimeout(() => {
         nameElement.textContent = "";
         roleElement.textContent = "";
@@ -783,17 +782,17 @@ function initProfileAutoType() {
     });
   });
 
-  // Update positions on window resize
+
   window.addEventListener("resize", () => {
-    // Hide display during resize to prevent positioning issues
+
     displayContainer.style.opacity = "0";
     displayContainer.style.visibility = "hidden";
   });
 
-  // Update positions on scroll
+
   window.addEventListener("scroll", () => {
     if (displayContainer.style.visibility === "visible") {
-      // Find the currently hovered profile and update position
+     
       const hoveredProfile = document.querySelector("[data-profile]:hover");
       if (
         hoveredProfile &&
@@ -810,14 +809,14 @@ function initProfileAutoType() {
   });
 }
 
-// Initialize when DOM is loaded
+
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", initProfileAutoType);
 } else {
   initProfileAutoType();
 }
 
-// Alternative initialization for dynamic content
+
 function reinitializeProfileAutoType() {
   initProfileAutoType();
 }
@@ -836,7 +835,7 @@ function openSavedPopup() {
         `
       )
       .join("");
-    // Make each card clickable to show the recipe popup again
+
     list.querySelectorAll(".saved-dish-card img").forEach((img) => {
       img.onclick = (e) => {
         const card = e.target.closest(".saved-dish-card");
@@ -844,7 +843,7 @@ function openSavedPopup() {
         closeSavedPopup();
       };
     });
-    // Add delete button logic
+
     list.querySelectorAll(".delete-saved-btn").forEach((btn) => {
       btn.onclick = (e) => {
         e.stopPropagation();
@@ -875,7 +874,7 @@ function openFinishedPopup() {
         `
       )
       .join("");
-    // Make each card clickable to show the recipe popup again
+
     list.querySelectorAll(".saved-dish-card").forEach((card) => {
       card.onclick = () => {
         closeFinishedPopup();

@@ -369,11 +369,9 @@ modal.addEventListener("click", (e) => {
 
 function displayRecipeDetails(recipe) {
   const ingredients = [];
-
   for (let i = 1; i <= 20; i++) {
     const ingredient = recipe[`strIngredient${i}`]?.trim();
     const measure = recipe[`strMeasure${i}`]?.trim();
-
     if (ingredient) {
       ingredients.push(`<li>${measure ? `${measure} ` : ""}${ingredient}</li>`);
     } else {
@@ -400,8 +398,16 @@ function displayRecipeDetails(recipe) {
     ? `<div class="source-wrapper"><a href="${recipe.strSource}" target="_blank">View Original Source</a></div>`
     : "";
 
-  // --- Checkbox and related function removed ---
+  // Add the custom checkbox at the top of the modal content
   modalContent.innerHTML = `
+    <div class="customCheckBoxHolder">
+      <input type="checkbox" id="finishedCheckBox" class="customCheckBoxInput">
+      <label for="finishedCheckBox" class="customCheckBoxWrapper">
+        <div class="customCheckBox">
+          <div class="inner">Mark as Finished</div>
+        </div>
+      </label>
+    </div>
     <h2>${recipe.strMeal}</h2>
     <img src="${recipe.strMealThumb}" alt="${recipe.strMeal}">
     ${categoryHTML}
@@ -411,6 +417,61 @@ function displayRecipeDetails(recipe) {
     ${youtubeHTML}
     ${sourceHTML}
   `;
+
+  // Save button logic (already present in modal-header-actions)
+  const saveBtn = document.getElementById("save-recipe-btn");
+  if (saveBtn) {
+    saveBtn.onclick = function () {
+      let saved = JSON.parse(localStorage.getItem("savedRecipes") || "[]");
+      if (!saved.some((r) => r.idMeal === recipe.idMeal)) {
+        saved.push(recipe);
+        localStorage.setItem("savedRecipes", JSON.stringify(saved));
+        alert("Recipe saved!");
+      } else {
+        alert("Recipe already saved!");
+      }
+    };
+  }
+  const closeBtn = document.getElementById("modal-close-btn");
+  if (closeBtn) {
+    closeBtn.onclick = closeModal;
+  }
+
+  // Finished checkbox logic
+  const finishedCheckbox = document.getElementById("finishedCheckBox");
+  if (finishedCheckbox) {
+    finishedCheckbox.addEventListener("change", function (e) {
+      if (e.target.checked) {
+        // Save to finished recipes in localStorage
+        let finished = JSON.parse(
+          localStorage.getItem("finishedRecipes") || "[]"
+        );
+        if (!finished.some((r) => r.idMeal === recipe.idMeal)) {
+          finished.push(recipe);
+          localStorage.setItem("finishedRecipes", JSON.stringify(finished));
+        }
+        closeModal();
+        openFinishedPopup();
+      }
+    });
+  }
+}
+
+// Add this function anywhere in your JS file (outside displayRecipeDetails)
+function saveDishCompletionToDatabase(recipe) {
+  fetch("/api/finished", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(recipe),
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      alert("Marked as finished and saved to database!");
+    })
+    .catch((err) => {
+      alert("Failed to save to database.");
+      console.error(err);
+    });
 }
 
 function scrollToRecipeFinder() {
@@ -505,35 +566,35 @@ class AutoTyper {
 const profileData = {
   regod: {
     name: "Ivan",
-    role: "THE MOST KUPAL",
+    role: "The FrontEnd Developer",
     description:
       "A beginner IT programmer. I specialize in building user-friendly interfaces using Java, HTML, and CSS, and I'm passionate about creating clean, responsive designs.",
-    url: "ivan-profile.html", // Add URL for navigation
+    url: "ivan-profile.html", 
   },
   alex: {
     name: "Jep",
-    role: "THE YOUNG DADDY",
+    role: "The FrontEnd Developer",
     description:
       "Frontend developer and UI/UX designer passionate about creating seamless, user-centered digital experiences. Combines clean, responsive code with thoughtful design to craft intuitive interfaces that engage and delight users.",
-    url: "jep-profile.html", // Add URL for navigation
+    url: "jep-profile.html",
   },
   sarah: {
     name: "Rhodney",
     role: "THE MR MILLIONAIRE",
     description:
-      "Frontend developer and UI/UX designer passionate about creating seamless, user-centered digital experiences. Combines clean, responsive code with thoughtful design to craft intuitive interfaces that engage and delight users.",
-    url: "rhodney-profile.html", // Add URL for navigation
+      "UI/UX designer passionate about creating seamless, user-centered digital experiences. Combines clean, responsive code with thoughtful design to craft intuitive interfaces that engage and delight users.",
+    url: "rhodney-profile.html", 
   },
   mike: {
     name: "JD",
-    role: "THE BASSIST AND HARRIZZLER",
+    role: "THE BackEnd Developer",
     description:
       "Expert in server-side development and database optimization for high-performance applications.",
-    url: "jd-profile.html", // Add URL for navigation
+    url: "jd-profile.html", 
   },
 };
 
-// Function to navigate to profile page with smooth transition
+
 function navigateToProfile(profileId) {
   const profileInfo = profileData[profileId];
   if (profileInfo && profileInfo.url) {
@@ -564,44 +625,46 @@ function navigateToProfile(profileId) {
   }
 }
 
-// Function to get positioning based on profile layout
+
+
+
 function getProfilePosition(profileId, profileCard) {
   const rect = profileCard.getBoundingClientRect();
   const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
   const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
 
-  // Position configurations for each profile based on their layout
+
   const positions = {
     regod: {
-      // Ivan - space on the left
+
       left: rect.left + scrollLeft - 320,
       top: rect.top + scrollTop + rect.height / 2 - 75,
       textAlign: "right",
     },
     alex: {
-      // Jep - space on the right
+
       left: rect.right + scrollLeft + 20,
       top: rect.top + scrollTop + rect.height / 2 - 75,
       textAlign: "left",
     },
     sarah: {
-      // Rhodney - space on the left
+
       left: rect.left + scrollLeft - 320,
       top: rect.top + scrollTop + rect.height / 2 - 75,
       textAlign: "right",
     },
     mike: {
-      // JD - space on the right
+
       left: rect.right + scrollLeft + 20,
       top: rect.top + scrollTop + rect.height / 2 - 75,
       textAlign: "left",
     },
   };
 
-  return positions[profileId] || positions.alex; // Default to right side
+  return positions[profileId] || positions.alex; 
 }
 
-// Initialize auto-typing functionality with positioned display
+
 function initProfileAutoType() {
   // Create display container
   const displayContainer = document.createElement("div");
@@ -657,7 +720,7 @@ function initProfileAutoType() {
   displayContainer.appendChild(descriptionElement);
   document.body.appendChild(displayContainer);
 
-  // Create auto-typers
+
   const nameTyper = new AutoTyper(nameElement, { typeSpeed: 80 });
   const roleTyper = new AutoTyper(roleElement, { typeSpeed: 60 });
   const descriptionTyper = new AutoTyper(descriptionElement, { typeSpeed: 40 });
@@ -668,16 +731,15 @@ function initProfileAutoType() {
   profiles.forEach((profile) => {
     const profileId = profile.getAttribute("data-profile");
 
-    // Add click event listener for navigation
     profile.addEventListener("click", (e) => {
-      e.preventDefault(); // Prevent any default behavior
+      e.preventDefault(); 
       navigateToProfile(profileId);
     });
 
-    // Add cursor pointer style to indicate clickability
+   
     profile.style.cursor = "pointer";
 
-    // Hover events for auto-typing
+
     profile.addEventListener("mouseenter", async () => {
       if (profileData[profileId]) {
         const data = profileData[profileId];
@@ -692,7 +754,7 @@ function initProfileAutoType() {
         displayContainer.style.opacity = "1";
         displayContainer.style.visibility = "visible";
 
-        // Start auto-typing sequence
+    
         await nameTyper.type(data.name);
         await new Promise((resolve) => setTimeout(resolve, 200));
         await roleTyper.type(data.role);
@@ -702,16 +764,16 @@ function initProfileAutoType() {
     });
 
     profile.addEventListener("mouseleave", () => {
-      // Stop all typing
+
       nameTyper.stop();
       roleTyper.stop();
       descriptionTyper.stop();
 
-      // Hide display container
+
       displayContainer.style.opacity = "0";
       displayContainer.style.visibility = "hidden";
 
-      // Clear content after animation
+
       setTimeout(() => {
         nameElement.textContent = "";
         roleElement.textContent = "";
@@ -720,17 +782,17 @@ function initProfileAutoType() {
     });
   });
 
-  // Update positions on window resize
+
   window.addEventListener("resize", () => {
-    // Hide display during resize to prevent positioning issues
+
     displayContainer.style.opacity = "0";
     displayContainer.style.visibility = "hidden";
   });
 
-  // Update positions on scroll
+
   window.addEventListener("scroll", () => {
     if (displayContainer.style.visibility === "visible") {
-      // Find the currently hovered profile and update position
+     
       const hoveredProfile = document.querySelector("[data-profile]:hover");
       if (
         hoveredProfile &&
@@ -747,79 +809,153 @@ function initProfileAutoType() {
   });
 }
 
-// Initialize when DOM is loaded
+
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", initProfileAutoType);
 } else {
   initProfileAutoType();
 }
 
-// Alternative initialization for dynamic content
+
 function reinitializeProfileAutoType() {
   initProfileAutoType();
 }
+function openSavedPopup() {
+  const saved = JSON.parse(localStorage.getItem("savedRecipes") || "[]");
+  const list = document.getElementById("saved-list");
+  if (saved.length) {
+    list.innerHTML = saved
+      .map(
+        (r) => `
+          <div class="saved-dish-card" data-id="${r.idMeal}">
+            <img src="${r.strMealThumb}" alt="${r.strMeal}">
+            <div class="saved-dish-title">${r.strMeal}</div>
+            <button class="delete-saved-btn" data-id="${r.idMeal}">Delete</button>
+          </div>
+        `
+      )
+      .join("");
 
-function setupCarousel(carouselId) {
-  const carouselContainer = document.getElementById(carouselId);
-  if (!carouselContainer) {
-    console.warn(`Carousel container with ID '${carouselId}' not found.`);
-    return;
+    list.querySelectorAll(".saved-dish-card img").forEach((img) => {
+      img.onclick = (e) => {
+        const card = e.target.closest(".saved-dish-card");
+        getRecipeDetails(card.getAttribute("data-id"));
+        closeSavedPopup();
+      };
+    });
+
+    list.querySelectorAll(".delete-saved-btn").forEach((btn) => {
+      btn.onclick = (e) => {
+        e.stopPropagation();
+        const id = btn.getAttribute("data-id");
+        showDeleteConfirmPopup(id);
+      };
+    });
+  } else {
+    list.innerHTML =
+      '<p style="color:#fff;text-align:center;">No saved recipes.</p>';
   }
+  document.getElementById("saved-popup").classList.remove("hidden");
+}
+function closeSavedPopup() {
+  document.getElementById("saved-popup").classList.add("hidden");
+}
+function openFinishedPopup() {
+  const finished = JSON.parse(localStorage.getItem("finishedRecipes") || "[]");
+  const list = document.getElementById("finished-list");
+  if (finished.length) {
+    list.innerHTML = finished
+      .map(
+        (r) => `
+          <div class="saved-dish-card" data-id="${r.idMeal}">
+            <img src="${r.strMealThumb}" alt="${r.strMeal}">
+            <div class="saved-dish-title">${r.strMeal}</div>
+          </div>
+        `
+      )
+      .join("");
+
+    list.querySelectorAll(".saved-dish-card").forEach((card) => {
+      card.onclick = () => {
+        closeFinishedPopup();
+        getRecipeDetails(card.getAttribute("data-id"));
+      };
+    });
+  } else {
+    list.innerHTML =
+      '<p style="color:#fff;text-align:center;">No finished recipes.</p>';
+  }
+  document.getElementById("finished-popup").classList.remove("hidden");
+}
+function closeFinishedPopup() {
+  document.getElementById("finished-popup").classList.add("hidden");
+}
+// --- Carousel setup with pause/resume on card hover ---
+function setupCarousel(carouselId, direction = "left") {
+  const carouselContainer = document.getElementById(carouselId);
+  if (!carouselContainer) return;
 
   const carouselTrack = carouselContainer.querySelector(".carousel-track");
-  const originalCards = carouselTrack.querySelectorAll(".card");
+  if (!carouselTrack) return;
 
-  if (originalCards.length === 0) {
-    console.warn(`No cards found in carousel track for ID '${carouselId}'.`);
-    return;
+  // Prevent double cloning
+  if (!carouselTrack.dataset.cloned) {
+    const cards = Array.from(carouselTrack.querySelectorAll(".card"));
+    if (cards.length === 0) {
+      // Try again if cards not rendered yet
+      setTimeout(() => setupCarousel(carouselId, direction), 100);
+      return;
+    }
+    cards.forEach(card => {
+      const clone = card.cloneNode(true);
+      carouselTrack.appendChild(clone);
+    });
+    carouselTrack.dataset.cloned = "true";
   }
 
-  // --- 1. Clone Cards for Seamless Loop ---
-  // Clone each original card and append it to the track.
-  originalCards.forEach((card) => {
-    const clone = card.cloneNode(true);
-    carouselTrack.appendChild(clone);
-  });
+  // Calculate total width of original cards
+  const cards = carouselTrack.querySelectorAll(".card");
+  const originalCount = cards.length / 2;
+  let totalWidth = 0;
+  for (let i = 0; i < originalCount; i++) {
+    const card = cards[i];
+    const style = getComputedStyle(card);
+    totalWidth += card.offsetWidth + parseFloat(style.marginRight || 0);
+  }
+  carouselTrack.style.width = (totalWidth * 2) + "px";
 
-  // --- 2. Calculate Dynamic Widths and Speed ---
-  let totalOriginalWidth = 0;
-  originalCards.forEach((card) => {
-    const cardStyle = getComputedStyle(card);
-    const marginRight = parseFloat(cardStyle.marginRight);
-    totalOriginalWidth += card.offsetWidth + marginRight;
-  });
+  // Set animation duration and name based on carousel
+  const speedVar = `--carousel-speed-${carouselId.slice(-1)}`;
+  const pixelsPerSecond = 40;
+  const duration = totalWidth / pixelsPerSecond;
+  carouselTrack.style.setProperty(speedVar, `${duration}s`);
 
-  // Set the carousel track's width to accommodate all cards (original + cloned)
-  carouselTrack.style.width = `${totalOriginalWidth * 2}px`; // Assuming we cloned once
+  // Set animation name and duration explicitly
+  if (direction === "left") {
+    carouselTrack.style.animation = `scroll-left-loop var(${speedVar}) linear infinite`;
+  } else {
+    carouselTrack.style.animation = `scroll-right-loop var(${speedVar}) linear infinite`;
+  }
+  carouselTrack.style.animationPlayState = "running";
 
-  const pixelsPerSecond = 50; // Adjust this value to control the speed
-  const animationDuration = totalOriginalWidth / pixelsPerSecond; // Time in seconds
-
-  // Apply the calculated duration as a CSS variable for this specific carousel
-  carouselTrack.style.setProperty(
-    `--carousel-speed-${carouselId.slice(-1)}`,
-    `${animationDuration}s`
-  );
-
-  // --- Optional: Pause on Hover ---
+  // Pause/resume on hover
   carouselTrack.addEventListener("mouseenter", () => {
     carouselTrack.style.animationPlayState = "paused";
   });
-
   carouselTrack.addEventListener("mouseleave", () => {
     carouselTrack.style.animationPlayState = "running";
   });
 }
 
-// Initialize the first carousel (moves right to left by default CSS)
-setupCarousel("carousel1");
-
-// Initialize the second carousel (moves left to right)
-setupCarousel("carousel2");
-
+// Move carousel setup inside DOMContentLoaded
 document.addEventListener("DOMContentLoaded", function () {
-  const imageElement = document.getElementById("rotatingImage");
+  // ...existing code...
 
+  setupCarousel("carousel1", "left");
+  setupCarousel("carousel2", "right");
+
+  // Rotating image fix
+  const imageElement = document.getElementById("rotatingImage");
   if (!imageElement) {
     console.error("Image element with ID 'rotatingImage' not found.");
     return;
@@ -836,7 +972,7 @@ document.addEventListener("DOMContentLoaded", function () {
     imageElement.style.opacity = 0;
 
     setTimeout(() => {
-      index = (index + 5) % images.length;
+      index = (index + 1) % images.length; // Fix increment
       imageElement.src = images[index];
       imageElement.style.opacity = 1;
     }, 1);
