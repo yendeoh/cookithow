@@ -566,35 +566,35 @@ class AutoTyper {
 const profileData = {
   regod: {
     name: "Ivan",
-    role: "The FrontEnd Developer",
+    role: "THE MOST KUPAL",
     description:
       "A beginner IT programmer. I specialize in building user-friendly interfaces using Java, HTML, and CSS, and I'm passionate about creating clean, responsive designs.",
-    url: "ivan-profile.html", 
+    url: "ivan-profile.html", // Add URL for navigation
   },
   alex: {
     name: "Jep",
-    role: "The FrontEnd Developer",
+    role: "THE YOUNG DADDY",
     description:
       "Frontend developer and UI/UX designer passionate about creating seamless, user-centered digital experiences. Combines clean, responsive code with thoughtful design to craft intuitive interfaces that engage and delight users.",
-    url: "jep-profile.html",
+    url: "jep-profile.html", // Add URL for navigation
   },
   sarah: {
     name: "Rhodney",
     role: "THE MR MILLIONAIRE",
     description:
-      "UI/UX designer passionate about creating seamless, user-centered digital experiences. Combines clean, responsive code with thoughtful design to craft intuitive interfaces that engage and delight users.",
-    url: "rhodney-profile.html", 
+      "Frontend developer and UI/UX designer passionate about creating seamless, user-centered digital experiences. Combines clean, responsive code with thoughtful design to craft intuitive interfaces that engage and delight users.",
+    url: "rhodney-profile.html", // Add URL for navigation
   },
   mike: {
     name: "JD",
-    role: "THE BackEnd Developer",
+    role: "THE BASSIST AND HARRIZZLER",
     description:
       "Expert in server-side development and database optimization for high-performance applications.",
-    url: "jd-profile.html", 
+    url: "jd-profile.html", // Add URL for navigation
   },
 };
 
-
+// Function to navigate to profile page with smooth transition
 function navigateToProfile(profileId) {
   const profileInfo = profileData[profileId];
   if (profileInfo && profileInfo.url) {
@@ -625,46 +625,44 @@ function navigateToProfile(profileId) {
   }
 }
 
-
-
-
+// Function to get positioning based on profile layout
 function getProfilePosition(profileId, profileCard) {
   const rect = profileCard.getBoundingClientRect();
   const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
   const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
 
-
+  // Position configurations for each profile based on their layout
   const positions = {
     regod: {
-
+      // Ivan - space on the left
       left: rect.left + scrollLeft - 320,
       top: rect.top + scrollTop + rect.height / 2 - 75,
       textAlign: "right",
     },
     alex: {
-
+      // Jep - space on the right
       left: rect.right + scrollLeft + 20,
       top: rect.top + scrollTop + rect.height / 2 - 75,
       textAlign: "left",
     },
     sarah: {
-
+      // Rhodney - space on the left
       left: rect.left + scrollLeft - 320,
       top: rect.top + scrollTop + rect.height / 2 - 75,
       textAlign: "right",
     },
     mike: {
-
+      // JD - space on the right
       left: rect.right + scrollLeft + 20,
       top: rect.top + scrollTop + rect.height / 2 - 75,
       textAlign: "left",
     },
   };
 
-  return positions[profileId] || positions.alex; 
+  return positions[profileId] || positions.alex; // Default to right side
 }
 
-
+// Initialize auto-typing functionality with positioned display
 function initProfileAutoType() {
   // Create display container
   const displayContainer = document.createElement("div");
@@ -720,7 +718,7 @@ function initProfileAutoType() {
   displayContainer.appendChild(descriptionElement);
   document.body.appendChild(displayContainer);
 
-
+  // Create auto-typers
   const nameTyper = new AutoTyper(nameElement, { typeSpeed: 80 });
   const roleTyper = new AutoTyper(roleElement, { typeSpeed: 60 });
   const descriptionTyper = new AutoTyper(descriptionElement, { typeSpeed: 40 });
@@ -731,15 +729,16 @@ function initProfileAutoType() {
   profiles.forEach((profile) => {
     const profileId = profile.getAttribute("data-profile");
 
+    // Add click event listener for navigation
     profile.addEventListener("click", (e) => {
-      e.preventDefault(); 
+      e.preventDefault(); // Prevent any default behavior
       navigateToProfile(profileId);
     });
 
-   
+    // Add cursor pointer style to indicate clickability
     profile.style.cursor = "pointer";
 
-
+    // Hover events for auto-typing
     profile.addEventListener("mouseenter", async () => {
       if (profileData[profileId]) {
         const data = profileData[profileId];
@@ -754,7 +753,7 @@ function initProfileAutoType() {
         displayContainer.style.opacity = "1";
         displayContainer.style.visibility = "visible";
 
-    
+        // Start auto-typing sequence
         await nameTyper.type(data.name);
         await new Promise((resolve) => setTimeout(resolve, 200));
         await roleTyper.type(data.role);
@@ -764,16 +763,16 @@ function initProfileAutoType() {
     });
 
     profile.addEventListener("mouseleave", () => {
-
+      // Stop all typing
       nameTyper.stop();
       roleTyper.stop();
       descriptionTyper.stop();
 
-
+      // Hide display container
       displayContainer.style.opacity = "0";
       displayContainer.style.visibility = "hidden";
 
-
+      // Clear content after animation
       setTimeout(() => {
         nameElement.textContent = "";
         roleElement.textContent = "";
@@ -782,17 +781,17 @@ function initProfileAutoType() {
     });
   });
 
-
+  // Update positions on window resize
   window.addEventListener("resize", () => {
-
+    // Hide display during resize to prevent positioning issues
     displayContainer.style.opacity = "0";
     displayContainer.style.visibility = "hidden";
   });
 
-
+  // Update positions on scroll
   window.addEventListener("scroll", () => {
     if (displayContainer.style.visibility === "visible") {
-     
+      // Find the currently hovered profile and update position
       const hoveredProfile = document.querySelector("[data-profile]:hover");
       if (
         hoveredProfile &&
@@ -809,14 +808,14 @@ function initProfileAutoType() {
   });
 }
 
-
+// Initialize when DOM is loaded
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", initProfileAutoType);
 } else {
   initProfileAutoType();
 }
 
-
+// Alternative initialization for dynamic content
 function reinitializeProfileAutoType() {
   initProfileAutoType();
 }
@@ -835,7 +834,7 @@ function openSavedPopup() {
         `
       )
       .join("");
-
+    // Make each card clickable to show the recipe popup again
     list.querySelectorAll(".saved-dish-card img").forEach((img) => {
       img.onclick = (e) => {
         const card = e.target.closest(".saved-dish-card");
@@ -843,7 +842,7 @@ function openSavedPopup() {
         closeSavedPopup();
       };
     });
-
+    // Add delete button logic
     list.querySelectorAll(".delete-saved-btn").forEach((btn) => {
       btn.onclick = (e) => {
         e.stopPropagation();
@@ -874,7 +873,7 @@ function openFinishedPopup() {
         `
       )
       .join("");
-
+    // Make each card clickable to show the recipe popup again
     list.querySelectorAll(".saved-dish-card").forEach((card) => {
       card.onclick = () => {
         closeFinishedPopup();
@@ -890,55 +889,71 @@ function openFinishedPopup() {
 function closeFinishedPopup() {
   document.getElementById("finished-popup").classList.add("hidden");
 }
-function setupCarousel(carouselId) {
-  const carouselContainer = document.getElementById(carouselId);
-  if (!carouselContainer) {
-    console.warn(`Carousel container with ID '${carouselId}' not found.`);
-    return;
+document.addEventListener("DOMContentLoaded", function () {
+  function setupCarousel(carouselId) {
+    const carouselContainer = document.getElementById(carouselId);
+    if (!carouselContainer) {
+      console.warn(`Carousel container with ID '${carouselId}' not found.`);
+      return;
+    }
+
+    const carouselTrack = carouselContainer.querySelector(".carousel-track");
+    const originalCards = carouselTrack.querySelectorAll(".card");
+
+    if (originalCards.length === 0) {
+      console.warn(`No cards found in carousel track for ID '${carouselId}'.`);
+      return;
+    }
+
+    // --- 1. Clone Cards for Seamless Loop ---
+    // This is the most important part for continuous looping.
+    // We clone the original cards and append them to the track.
+    // This creates enough content for the animation to scroll without showing empty space,
+    // and when the animation resets, it's at the start of the cloned content.
+    originalCards.forEach((card) => {
+      const clone = card.cloneNode(true); // true means deep clone (all children)
+      carouselTrack.appendChild(clone);
+    });
+
+    // --- 2. Calculate Dynamic Widths and Speed ---
+    // Calculate the total width of the *original* content.
+    let totalOriginalWidth = 0;
+    originalCards.forEach((card) => {
+      const cardStyle = getComputedStyle(card);
+      const marginRight = parseFloat(cardStyle.marginRight);
+      totalOriginalWidth += card.offsetWidth + marginRight;
+    });
+
+    // Set the carousel track's width to twice the original content width.
+    // This makes sure the track contains both the original and the cloned set of cards.
+    carouselTrack.style.width = `${totalOriginalWidth * 2}px`;
+
+    // Calculate animation duration based on desired speed (pixels per second)
+    const pixelsPerSecond = 50; // Adjust this value to control the speed of the carousel
+    const animationDuration = totalOriginalWidth / pixelsPerSecond; // Time in seconds for one full loop of original content
+
+    // Apply the calculated duration as a CSS variable for this specific carousel.
+    // The CSS variables (`--carousel-speed-1`, `--carousel-speed-2`) are then used in the CSS @keyframes.
+    carouselTrack.style.setProperty(
+      `--carousel-speed-${carouselId.slice(-1)}`,
+      `${animationDuration}s`
+    );
+
+    // --- Optional: Pause on Hover ---
+    // This adds a nice user experience feature.
+    carouselTrack.addEventListener("mouseenter", () => {
+      carouselTrack.style.animationPlayState = "paused";
+    });
+
+    carouselTrack.addEventListener("mouseleave", () => {
+      carouselTrack.style.animationPlayState = "running";
+    });
   }
 
-  const carouselTrack = carouselContainer.querySelector(".carousel-track");
-  const originalCards = carouselTrack.querySelectorAll(".card");
-
-  if (originalCards.length === 0) {
-    console.warn(`No cards found in carousel track for ID '${carouselId}'.`);
-    return;
-  }
-
-  originalCards.forEach((card) => {
-    const clone = card.cloneNode(true);
-    carouselTrack.appendChild(clone);
-  });
-
-  let totalOriginalWidth = 0;
-  originalCards.forEach((card) => {
-    const cardStyle = getComputedStyle(card);
-    const marginRight = parseFloat(cardStyle.marginRight);
-    totalOriginalWidth += card.offsetWidth + marginRight;
-  });
-
-  carouselTrack.style.width = `${totalOriginalWidth * 2}px`;
-
-  const pixelsPerSecond = 25;
-  const animationDuration = totalOriginalWidth / pixelsPerSecond;
-
-  carouselTrack.style.setProperty(
-    `--carousel-speed-${carouselId.slice(-1)}`,
-    `${animationDuration}s`
-  );
-
-  carouselTrack.addEventListener("mouseenter", () => {
-    carouselTrack.style.animationPlayState = "paused";
-  });
-
-  carouselTrack.addEventListener("mouseleave", () => {
-    carouselTrack.style.animationPlayState = "running";
-  });
-}
-
-setupCarousel("carousel1");
-
-setupCarousel("carousel2");
+  // Initialize both carousels to make them loop continuously
+  setupCarousel("carousel1");
+  setupCarousel("carousel2");
+});
 
 document.addEventListener("DOMContentLoaded", function () {
   const imageElement = document.getElementById("rotatingImage");
@@ -959,10 +974,10 @@ document.addEventListener("DOMContentLoaded", function () {
     imageElement.style.opacity = 0;
 
     setTimeout(() => {
-      index = (index + 5) % images.length;
+      index = (index + 1) % images.length;
       imageElement.src = images[index];
       imageElement.style.opacity = 1;
-    }, 1);
+    }, 500);
   }, 7000);
 });
 
