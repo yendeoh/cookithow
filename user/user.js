@@ -892,59 +892,50 @@ function closeFinishedPopup() {
 document.addEventListener("DOMContentLoaded", function () {
   function setupCarousel(carouselId) {
     const carouselContainer = document.getElementById(carouselId);
-    if (!carouselContainer) {
-      console.warn(`Carousel container with ID '${carouselId}' not found.`);
-      return;
-    }
+    if (!carouselContainer) return;
 
     const carouselTrack = carouselContainer.querySelector(".carousel-track");
-    const originalCards = carouselTrack.querySelectorAll(".card");
+    const originalCards = Array.from(
+      carouselTrack.querySelectorAll(".card:not(.cloned)")
+    );
 
-    if (originalCards.length === 0) {
-      console.warn(`No cards found in carousel track for ID '${carouselId}'.`);
-      return;
-    }
+    if (originalCards.length === 0) return;
 
-    // --- 1. Clone Cards for Seamless Loop ---
-    // This is the most important part for continuous looping.
-    // We clone the original cards and append them to the track.
-    // This creates enough content for the animation to scroll without showing empty space,
-    // and when the animation resets, it's at the start of the cloned content.
+    // Remove existing clones
+    carouselTrack
+      .querySelectorAll(".card.cloned")
+      .forEach((clone) => clone.remove());
+
+    // Clone all cards and append to the end for seamless looping
     originalCards.forEach((card) => {
-      const clone = card.cloneNode(true); // true means deep clone (all children)
+      const clone = card.cloneNode(true);
+      clone.classList.add("cloned");
       carouselTrack.appendChild(clone);
     });
 
-    // --- 2. Calculate Dynamic Widths and Speed ---
-    // Calculate the total width of the *original* content.
-    let totalOriginalWidth = 0;
-    originalCards.forEach((card) => {
-      const cardStyle = getComputedStyle(card);
-      const marginRight = parseFloat(cardStyle.marginRight);
-      totalOriginalWidth += card.offsetWidth + marginRight;
+    // Calculate total width for all cards (original + clones)
+    let totalWidth = 0;
+    const allCards = carouselTrack.querySelectorAll(".card");
+    allCards.forEach((card) => {
+      totalWidth += card.offsetWidth;
+      // Add margin if you use margin-right
+      const style = getComputedStyle(card);
+      totalWidth += parseFloat(style.marginRight || 0);
     });
 
-    // Set the carousel track's width to twice the original content width.
-    // This makes sure the track contains both the original and the cloned set of cards.
-    carouselTrack.style.width = `${totalOriginalWidth * 2}px`;
+    // Set the track width to fit both sets
+    carouselTrack.style.width = `${totalWidth}px`;
 
-    // Calculate animation duration based on desired speed (pixels per second)
-    const pixelsPerSecond = 50; // Adjust this value to control the speed of the carousel
-    const animationDuration = totalOriginalWidth / pixelsPerSecond; // Time in seconds for one full loop of original content
+    // Animation duration based on width (adjust speed as needed)
+    const pixelsPerSecond = 60;
+    const animationDuration = totalWidth / pixelsPerSecond;
 
-    // Apply the calculated duration as a CSS variable for this specific carousel.
-    // The CSS variables (`--carousel-speed-1`, `--carousel-speed-2`) are then used in the CSS @keyframes.
-    carouselTrack.style.setProperty(
-      `--carousel-speed-${carouselId.slice(-1)}`,
-      `${animationDuration}s`
-    );
+    carouselTrack.style.animation = `scroll-left-loop ${animationDuration}s linear infinite`;
 
-    // --- Optional: Pause on Hover ---
-    // This adds a nice user experience feature.
+    // Pause on hover
     carouselTrack.addEventListener("mouseenter", () => {
       carouselTrack.style.animationPlayState = "paused";
     });
-
     carouselTrack.addEventListener("mouseleave", () => {
       carouselTrack.style.animationPlayState = "running";
     });

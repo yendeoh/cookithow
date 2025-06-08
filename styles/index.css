@@ -66,81 +66,75 @@ header {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  background-attachment: fixed; 
+  background-attachment: fixed;
   padding-top: 70px;
 }
 
-  #home {
-    margin-bottom: 0; 
+#home {
+  margin-bottom: 0;
 }
 
 #cuisines {
-    margin-top: 0; 
-    padding: 8rem 10%; 
-    background-image: url(/assets/cook.png);
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-attachment: fixed;
-    color: white;
-    position: relative;
-    text-align: center; 
+  margin-top: 0;
+  padding: 8rem 10%;
+  background-image: url(/assets/cook.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  color: white;
+  position: relative;
+  text-align: center;
 }
 
 .cuisines-text {
-    margin-bottom: 2rem; 
-    font-size: 1.8rem; 
-    line-height: 1.5;
+  margin-bottom: 2rem;
+  font-size: 1.8rem;
+  line-height: 1.5;
 }
 
 .carousel-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow-x: auto;
-    padding: 20px 0;
-    gap: 15px; 
-    max-width: 100%; 
-    margin: 0; 
-    background-color: transparent;
-    border: none;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  padding: 20px 0;
 }
 
-
 .carousel-track {
-    display: flex;
-    gap: 15px; 
+  display: flex;
+  gap: 0;
+  /* animation is set by JS */
 }
 
 .carousel-container img {
-    border-radius: 10px; 
-    width: 100%; 
-    height: auto; 
-    object-fit: cover; 
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    background-color: transparent; 
-    border: none;
+  border-radius: 10px;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background-color: transparent;
+  border: none;
 }
 
 .carousel-container img:hover {
-    transform: scale(1.05); 
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); 
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 /* Ensure responsiveness */
 @media (max-width: 800px) {
-    .carousel-container img {
-        width: 200px; 
-        height: 150px;
-    }
+  .carousel-container img {
+    width: 200px;
+    height: 150px;
+  }
 }
 
 @media (max-width: 600px) {
-    .carousel-container img {
-        width: 150px; 
-        height: 120px;
-         position: relative;
-    }
+  .carousel-container img {
+    width: 150px;
+    height: 120px;
+    position: relative;
+  }
 }
 
 .home-swiper::before {
@@ -194,6 +188,21 @@ header {
   animation: spin 10s linear infinite;
   margin: 0 0 0 auto;
   display: block;
+}
+
+@media (max-width: 900px) {
+  #rotatingImage {
+    width: 350px;
+    height: 350px;
+  }
+}
+
+@media (max-width: 600px) {
+  #rotatingImage {
+    width: 180px;
+    height: 180px;
+    margin: 24px auto 0 auto;
+  }
 }
 
 .circle-img {
@@ -888,8 +897,6 @@ h1 {
   }
 }
 
-
-
 /* If you want different video opacity on mobile */
 @media (max-width: 768px) {
   .team-video-background {
@@ -1009,51 +1016,78 @@ h1 {
 
 /* --- Carousel styles for cuisines section (moved from index.html) --- */
 .cuisines {
-    margin-top: 0 !important;
-    padding-top: 0 !important;
+  margin-top: 0 !important;
+  padding-top: 0 !important;
 }
 
 .carousel-container {
-    overflow: hidden;
-    width: 100%;
+  overflow: hidden;
+  width: 100%;
 }
 
 .carousel-track {
-    display: flex;
-    /* fallback animation, will be overridden by specific carousel below */
-    animation: scroll-carousel var(--carousel-speed-1, 20s) linear infinite;
-    will-change: transform;
+  display: flex;
+  /* fallback animation, will be overridden by specific carousel below */
+  animation: scroll-carousel var(--carousel-speed-1, 20s) linear infinite;
+  will-change: transform;
 }
 
 /* carousel1 scrolls to the right */
 #carousel1 .carousel-track {
-    animation: scroll-carousel-right var(--carousel-speed-1, 20s) linear infinite;
+  animation: scroll-carousel-right var(--carousel-speed-1, 20s) linear infinite;
 }
 
 /* carousel2 scrolls to the left */
 #carousel2 .carousel-track {
-    animation: scroll-carousel var(--carousel-speed-2, 20s) linear infinite;
+  animation: scroll-carousel var(--carousel-speed-2, 20s) linear infinite;
 }
 
 @keyframes scroll-carousel {
-    0% {
-        transform: translateX(0);
-    }
-    100% {
-        transform: translateX(-50%);
-    }
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 @keyframes scroll-carousel-right {
-    0% {
-        transform: translateX(-50%);
-    }
-    100% {
-        transform: translateX(0);
-    }
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
 }
 
 .card {
-    flex: 0 0 auto;
-    margin-right: 24px;
+  flex: 0 0 auto;
+  margin-right: 24px;
+}
+
+.carousel-container {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  padding: 20px 0;
+}
+
+.carousel-track {
+  display: flex;
+  gap: 0;
+  /* animation is set by JS */
+}
+
+.card {
+  flex-shrink: 0;
+  margin-right: 20px;
+}
+
+@keyframes scroll-left-loop {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
 }

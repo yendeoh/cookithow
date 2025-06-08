@@ -243,24 +243,16 @@ header {
 }
 
 .carousel-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow-x: auto;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
   padding: 20px 0;
-  gap: 15px;
-  max-width: 100%;
-  margin: 0;
-  background-color: transparent;
-  border: none;
 }
 
 .carousel-track {
   display: flex;
-  /* width is set by JS */
-  animation: scroll-left-loop 30s linear infinite;
-  /* Remove gap if you want seamless connection */
   gap: 0;
+  /* animation is set by JS */
 }
 
 .carousel-container img {
@@ -735,7 +727,7 @@ h1 {
   font-size: 0.95rem;
 }
 
-#recipe-details-content ul li:last-child {
+#recipe #recipe-details-content ul li:last-child {
   border-bottom: none;
 }
 
@@ -1284,21 +1276,20 @@ h1 {
 }
 .carousel-container {
   width: 100%;
-  overflow: hidden; /* Must be hidden for seamless loop */
+  overflow: hidden;
   position: relative;
   padding: 20px 0;
 }
 
 .carousel-track {
   display: flex;
-  /* width is set by JS */
-  animation: scroll-left-loop 30s linear infinite;
-  /* Remove gap if you want seamless connection */
   gap: 0;
+  /* animation is set by JS */
 }
+
 .card {
   flex-shrink: 0;
-  margin-right: 20px; /* Or 0 if you want no gap */
+  margin-right: 20px;
 }
 
 @keyframes scroll-left-loop {
