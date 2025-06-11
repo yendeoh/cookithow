@@ -11,7 +11,10 @@
   box-sizing: border-box;
 }
 
-html {
+html,
+body {
+  width: 100%;
+  max-width: 100vw;
   overflow-x: hidden;
 }
 
@@ -24,6 +27,42 @@ body {
   color: #faa307;
   padding-top: 80px;
   background-color: #000000; /* Add solid background for body */
+}
+
+/* Responsive scaling for the entire site */
+@media (max-width: 1200px) {
+  body {
+    zoom: 0.95;
+  }
+}
+@media (max-width: 1000px) {
+  body {
+    zoom: 0.85;
+  }
+}
+@media (max-width: 800px) {
+  body {
+    zoom: 0.75;
+  }
+}
+@media (max-width: 600px) {
+  body {
+    zoom: 0.6;
+  }
+}
+
+/* For Safari/iOS, use transform as fallback */
+@media (max-width: 800px) {
+  body {
+    -webkit-transform: scale(0.75);
+    -webkit-transform-origin: top left;
+  }
+}
+@media (max-width: 600px) {
+  body {
+    -webkit-transform: scale(0.6);
+    -webkit-transform-origin: top left;
+  }
 }
 
 section {
@@ -1419,4 +1458,58 @@ h1 {
 }
 .delete-saved-btn:hover {
   background: #c0392b;
+}
+
+@media (max-width: 900px) {
+  .carousel-container {
+    padding: 10px 0;
+  }
+  .carousel-track {
+    gap: 10px;
+  }
+  .card {
+    width: 200px;
+    height: 140px;
+    margin-right: 10px;
+  }
+  .team-grid-container {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    max-width: 600px;
+  }
+}
+
+@media (max-width: 600px) {
+  .carousel-container {
+    padding: 5px 0;
+  }
+  .card {
+    width: 140px;
+    height: 100px;
+    margin-right: 6px;
+  }
+  .home-swiper {
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 2vw;
+    height: auto;
+  }
+  .home-text {
+    max-width: 100%;
+    text-align: center;
+  }
+  #rotatingImage {
+    width: 140px;
+    height: 140px;
+    margin: 24px auto 0 auto;
+  }
+}
+
+section,
+header,
+.carousel-container,
+.recipe-finder-container,
+.team-section {
+  max-width: 100vw;
+  box-sizing: border-box;
 }
