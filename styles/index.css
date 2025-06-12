@@ -1091,3 +1091,122 @@ h1 {
     transform: translateX(-50%);
   }
 }
+
+@media (max-width: 900px) {
+  #team-section {
+    padding: 60px 10px 40px;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  .team-grid-container {
+    gap: 24px;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  .team-photo-large {
+    width: 120px !important;
+    height: 120px !important;
+  }
+}
+
+@media (max-width: 600px) {
+  #team-section {
+    padding: 30px 2vw 20px;
+    max-width: 98vw;
+    margin: 0 auto;
+  }
+  .team-grid-container {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+    max-width: 98vw !important;
+    margin: 0 auto;
+  }
+  .team-photo-large {
+    width: 80px !important;
+    height: 80px !important;
+  }
+  .team-card {
+    padding: 18px 8px;
+  }
+  #team-section .our-team-title {
+    font-size: 1.3rem;
+    margin-bottom: 30px;
+  }
+}
+
+@media (max-width: 900px) {
+  section,
+  .recipe-finder-container,
+  .carousel-container,
+  .team-section,
+  #team-section {
+    padding: 2.5rem 2vw !important;
+    max-width: 100vw;
+  }
+  .home-swiper {
+    padding: 4rem 2vw !important;
+    flex-direction: column;
+    align-items: center;
+    height: auto;
+  }
+  .home-text {
+    max-width: 100%;
+    text-align: center;
+  }
+  .carousel-container {
+    padding: 10px 0 !important;
+  }
+  .card,
+  .carousel-container img {
+    width: 180px !important;
+    height: 120px !important;
+  }
+  .team-photo-large {
+    width: 120px !important;
+    height: 120px !important;
+  }
+}
+
+@media (max-width: 600px) {
+  section,
+  .recipe-finder-container,
+  .carousel-container,
+  .team-section,
+  #team-section {
+    padding: 1.2rem 1vw !important;
+    max-width: 100vw;
+  }
+  .home-swiper {
+    padding: 2rem 1vw !important;
+    flex-direction: column;
+    align-items: center;
+    height: auto;
+  }
+  .home-text h1 {
+    font-size: 1.2rem !important;
+  }
+  .home-text span {
+    font-size: 0.9rem !important;
+  }
+  .carousel-container {
+    padding: 5px 0 !important;
+  }
+  .card,
+  .carousel-container img {
+    width: 110px !important;
+    height: 80px !important;
+  }
+  .team-photo-large {
+    width: 80px !important;
+    height: 80px !important;
+  }
+  .team-grid-container {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+    max-width: 98vw !important;
+  }
+  .modal-content {
+    max-width: 98vw !important;
+    padding: 10px 2vw !important;
+  }
+}
